@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Upload,
   FileText,
@@ -8,6 +8,8 @@ import {
   AlertCircle,
   FileCode,
   Layers,
+  Zap,
+  Clock,
 } from "lucide-react";
 import { useProposalStore } from "../store/proposalStore";
 import type { AnalysisResponse } from "../types/proposal";
@@ -55,7 +57,22 @@ export const IngestionDropzone: React.FC = () => {
   const [pastedText, setPastedText] = useState(SAMPLE_BRIEFS[0].text);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string>("gemma4:e2b");
+  const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    let interval: any;
+    if (isAnalyzing) {
+      setElapsedSeconds(0);
+      interval = setInterval(() => {
+        setElapsedSeconds((s) => s + 1);
+      }, 1000);
+    } else {
+      setElapsedSeconds(0);
+    }
+    return () => clearInterval(interval);
+  }, [isAnalyzing]);
 
   const charCount = activeInputTab === "file" && selectedFile ? selectedFile.size : pastedText.length;
   const estimatedTokens = Math.max(1, Math.round(charCount / 4));
@@ -77,29 +94,34 @@ export const IngestionDropzone: React.FC = () => {
     }
   };
 
+  const handleLoadDemo = async () => {
+    setErrorMsg(null);
+    setIsAnalyzing(true);
+    try {
+      const res = await fetch("/demo/01_mobile_pets_mvp.json");
+      if (!res.ok) throw new Error("Could not load recorded demo trace.");
+      const data = await res.json();
+      setProposal(data.proposal);
+      setTrace(data.trace || []);
+      setRawBriefText(data.brief_text || pastedText);
+      setFilename("demo_recorded_run.json");
+    } catch (err: any) {
+      setErrorMsg(err.message || "Failed to load demo replay.");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   const handleAnalyze = async () => {
     setErrorMsg(null);
     setIsAnalyzing(true);
 
     try {
-      const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
-      if (isDemoMode) {
-        // Load recorded run from /demo/
-        const res = await fetch("/demo/01_mobile_pets_mvp.json");
-        if (!res.ok) throw new Error("Could not load recorded demo trace.");
-        const data = await res.json();
-        setProposal(data.proposal);
-        setTrace(data.trace || []);
-        setRawBriefText(data.brief_text || pastedText);
-        setFilename("demo_recorded_run.json");
-        setIsAnalyzing(false);
-        return;
-      }
-
       const formData = new FormData();
       formData.append("hourly_rate", hourlyRate.toString());
       formData.append("currency", currency);
       formData.append("contingency_percent", contingencyPercent.toString());
+      formData.append("model", selectedModel);
 
       if (activeInputTab === "file" && selectedFile) {
         formData.append("file", selectedFile);
@@ -310,15 +332,20 @@ export const IngestionDropzone: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-400 mb-1.5">
-              Target Architecture
-            </label>
-            <div className="px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-300 font-mono flex items-center justify-between">
-              <span>Local Gemma 4</span>
-              <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 px-1.5 py-0.5 rounded">
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-xs font-medium text-zinc-400">Target Architecture</label>
+              <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-500/20 px-1.5 py-0.5 rounded">
                 OFFLINE SAFE
               </span>
             </div>
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-emerald-500/50 cursor-pointer"
+            >
+              <option value="gemma4:e2b">Gemma 4 2B (Fast / CPU Recommended)</option>
+              <option value="gemma4:e4b">Gemma 4 4B (Deep / GPU)</option>
+            </select>
           </div>
         </div>
 
@@ -327,31 +354,76 @@ export const IngestionDropzone: React.FC = () => {
           <div className="flex items-start gap-2.5 p-3 rounded-xl bg-red-950/50 border border-red-500/40 text-red-200 text-xs">
             <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <p className="font-semibold">Analysis Failed</p>
+              <p className="font-semibold">Analysis Notice</p>
               <p className="text-red-300/90">{errorMsg}</p>
             </div>
           </div>
         )}
 
-        {/* Action Button */}
-        <div className="pt-2">
-          <button
-            onClick={handleAnalyze}
-            disabled={isAnalyzing}
-            className="w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-zinc-800 text-zinc-950 disabled:text-zinc-500 font-bold text-sm tracking-wide transition-all shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
-          >
-            {isAnalyzing ? (
-              <>
-                <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-zinc-900 border-t-transparent" />
-                <span>Running 5-Step Scoping Agent Locally...</span>
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-4 h-4" />
-                <span>Scope Proposal with Local Gemma</span>
-              </>
-            )}
-          </button>
+        {/* Action Buttons */}
+        <div className="space-y-3 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Instant Demo Replay Button */}
+            <button
+              type="button"
+              onClick={handleLoadDemo}
+              disabled={isAnalyzing}
+              className="py-3 px-4 rounded-xl bg-zinc-800/90 hover:bg-zinc-800 border border-emerald-500/40 hover:border-emerald-500/70 text-emerald-300 hover:text-emerald-200 font-semibold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Zap className="w-4 h-4 text-emerald-400 shrink-0 fill-emerald-400/20" />
+              <span>⚡ Load Instant Demo Replay (0s)</span>
+            </button>
+
+            {/* Live Local Gemma Scoping Button */}
+            <button
+              type="button"
+              onClick={handleAnalyze}
+              disabled={isAnalyzing}
+              className="py-3 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-zinc-800 text-zinc-950 disabled:text-zinc-500 font-bold text-xs tracking-wide transition-all shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+            >
+              {isAnalyzing ? (
+                <>
+                  <span className="inline-block animate-spin rounded-full h-3.5 w-3.5 border-2 border-zinc-900 border-t-transparent" />
+                  <span>Scoping Locally... ({elapsedSeconds}s)</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4 shrink-0" />
+                  <span>Scope with Local {selectedModel.includes("e2b") ? "Gemma 2B" : "Gemma 4B"}</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Active CPU Progress Indicator */}
+          {isAnalyzing && (
+            <div className="p-4 rounded-xl bg-zinc-950/90 border border-zinc-800/80 space-y-2.5 text-xs text-zinc-300 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-emerald-400 flex items-center gap-2">
+                  <span className="inline-block animate-spin rounded-full h-3 w-3 border-2 border-emerald-400 border-t-transparent" />
+                  Local 5-Step Scoping Pipeline in Progress
+                </span>
+                <span className="font-mono text-xs text-zinc-400 flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-zinc-500" />
+                  {elapsedSeconds}s elapsed
+                </span>
+              </div>
+              <p className="text-zinc-400 leading-relaxed text-[11px]">
+                Ollama is executing schema-constrained inference on your local CPU. Zero client data leaves your laptop.
+                Because CPUs generate tokens sequentially at ~3–5 tokens/sec, this takes 1–3 minutes per step.
+              </p>
+              <div className="pt-1.5 flex items-center justify-between border-t border-zinc-800/60">
+                <span className="text-[11px] text-zinc-500">Want to test the full workbench immediately?</span>
+                <button
+                  type="button"
+                  onClick={handleLoadDemo}
+                  className="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold underline cursor-pointer"
+                >
+                  ⚡ Switch to Instant Demo Trace →
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

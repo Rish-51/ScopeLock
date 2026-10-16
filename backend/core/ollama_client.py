@@ -79,6 +79,7 @@ class OllamaClient:
         attempt: int = 1,
         model: Optional[str] = None,
         trace_span: bool = False,
+        num_predict: int = 768,
     ) -> Tuple_Response:
         """
         Calls Ollama /api/chat with format=<JSON Schema>, parsing to response_model.
@@ -95,7 +96,7 @@ class OllamaClient:
                 "temperature": 0.0,
                 "seed": 42,
                 "num_ctx": self.num_ctx,
-                "num_predict": 4096,
+                "num_predict": num_predict,
             },
         }
 
