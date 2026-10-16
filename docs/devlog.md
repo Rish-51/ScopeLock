@@ -121,3 +121,19 @@ This document is the source of truth for all observed metrics, failures, hardwar
 - `render.yaml`: Render static site blueprint with `VITE_DEMO_MODE=true` SPA rewrites.
 - `frontend/public/demo/01_mobile_pets_mvp.json`: Authentic recorded run ready for instant replay on the hosted demo site.
 - `scripts/record_demo.py`: Automation script for recording local runs.
+
+---
+
+## Live Gate 0 Smoke Test & Inference Verification
+**Timestamp:** 2026-10-16T14:05:00+05:30  
+**Status:** PASS
+
+- **Model Downloaded:** `gemma4:e4b` (6.6 GB) & `gemma4:e2b` (4.6 GB) verified via `ollama list`.
+- **Smoke Test Executed:** `scripts/smoke_ollama.py` executed against live `gemma4:e4b` on Ollama (`llama-server.exe`).
+- **Pydantic Validation:** 100% valid JSON matching `RequirementsResult` schema. Zero validation errors.
+- **Hardware Telemetry:**
+  - Host CPU: Intel Core i5-1135G7 (4 cores / 8 threads)
+  - Memory: 8 GB Host RAM, 3.2 GB working set under `llama-server.exe`
+  - Tokens Generated: 541 eval tokens (57 prompt tokens, 598 total)
+  - Pydantic schema validation: PASSED
+
