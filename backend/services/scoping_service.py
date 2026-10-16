@@ -37,23 +37,22 @@ Extract atomic functional and non-functional requirements from the client brief.
 RULES:
 1. Every requirement MUST contain a source_quote copied EXACTLY character-for-character from the brief.
 2. If you cannot find an exact verbatim quote in the brief, omit the item.
-3. Dissect casual client requests into concrete engineering requirements (e.g. 'social login' -> OAuth flow, session handling, account linking).
+3. Extract exactly 3 or 4 key requirements total. Keep summaries concise (under 15 words).
 4. Assign appropriate complexity_tags (e.g. AUTH, PAYMENTS, THIRD_PARTY_API, COMPLIANCE, REALTIME, MOBILE_RELEASE, AI_ML, NONE).
-5. Extract between 3 and 5 key requirements total. Be concise.
-6. Output MUST strictly match the JSON schema."""
+5. Output MUST strictly match the JSON schema."""
 
 SYSTEM_PROMPT_B = """You are ScopeLock Scoper, an expert software architect.
 Analyze the client brief and requirements for technical risks and scope-creep traps.
 RULES:
-1. Identify 2 to 3 key technical risks with category, severity (LOW, MEDIUM, HIGH, CRITICAL), mitigation, and a question to ask the client.
-2. Identify 2 to 3 scope-creep warnings: vague phrases in the brief that could cause unpaid work. For each, quote the EXACT ambiguous phrase from the brief, explain why it is dangerous, and provide a protective Statement of Work (SOW) clause.
-3. List 2 to 4 explicit assumptions and out-of-scope items. Be concise.
+1. Identify 2 key technical risks with category, severity (LOW, MEDIUM, HIGH, CRITICAL), and concise 1-sentence mitigation.
+2. Identify 2 scope-creep warnings: vague phrases in the brief that could cause unpaid work. For each, quote the EXACT ambiguous phrase from the brief, explain why it is dangerous, and provide a protective Statement of Work (SOW) clause.
+3. List 2 to 3 explicit assumptions and out-of-scope items. Be concise.
 4. Output MUST strictly match the JSON schema."""
 
 SYSTEM_PROMPT_C = """You are ScopeLock Scoper, an expert engineering project manager.
 Break down the requirements into an ordered milestone plan with integer hour estimates.
 RULES:
-1. Provide 3 to 4 sequential milestones.
+1. Provide 3 sequential milestones.
 2. Each milestone must specify objective, deliverables, linked requirement_ids, and an hour range (hours_min, hours_max).
 3. Hours MUST be realistic integers (e.g. 10 to 25).
 4. Do NOT compute prices, rates, totals, or percentages.
@@ -63,7 +62,7 @@ SYSTEM_PROMPT_D = """You are ScopeLock Scoper.
 Draft a professional, courteous 'questions before I quote' email for the freelancer to send to the client.
 RULES:
 1. Highlight the key technical ambiguities and scope clarification questions.
-2. Keep the tone collaborative, professional, and confidence-inspiring. Keep it concise (under 150 words).
+2. Keep the tone collaborative, professional, and confidence-inspiring. Keep it under 100 words.
 3. Output MUST strictly match the JSON schema with 'subject' and 'body'."""
 
 
@@ -177,7 +176,7 @@ class ScopingService:
                     messages=msgs,
                     response_model=RequirementsResult,
                     stage=stage_label,
-                    num_predict=600,
+                    num_predict=1200,
                 )
                 requirements_results.append(res)
 
@@ -206,7 +205,7 @@ class ScopingService:
                 messages=msgs_b,
                 response_model=RiskResult,
                 stage="risks",
-                num_predict=600,
+                num_predict=1200,
             )
 
             # Step C: Milestones & Scoping
@@ -228,7 +227,7 @@ class ScopingService:
                 messages=msgs_c,
                 response_model=MilestonePlan,
                 stage="milestones",
-                num_predict=450,
+                num_predict=800,
             )
 
             # Deterministic Tool 1: verify_quotes
@@ -285,7 +284,7 @@ class ScopingService:
                 messages=msgs_d,
                 response_model=ClientEmail,
                 stage="client_email",
-                num_predict=250,
+                num_predict=400,
             )
 
             return ScopeLockProposal(

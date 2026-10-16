@@ -351,12 +351,22 @@ export const IngestionDropzone: React.FC = () => {
 
         {/* Error Notification */}
         {errorMsg && (
-          <div className="flex items-start gap-2.5 p-3 rounded-xl bg-red-950/50 border border-red-500/40 text-red-200 text-xs">
-            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-semibold">Analysis Notice</p>
-              <p className="text-red-300/90">{errorMsg}</p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-red-950/60 border border-red-500/40 text-red-200 text-xs">
+            <div className="flex items-start gap-2.5">
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-semibold text-red-300">Local Analysis Notice</p>
+                <p className="text-red-300/80 leading-relaxed">{errorMsg}</p>
+              </div>
             </div>
+            <button
+              type="button"
+              onClick={handleLoadDemo}
+              className="shrink-0 px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer self-end sm:self-center"
+            >
+              <Zap className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Load Instant Demo</span>
+            </button>
           </div>
         )}
 

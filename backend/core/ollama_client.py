@@ -45,6 +45,78 @@ from typing import Tuple
 Tuple_Response = Tuple[Any, Dict[str, Any]]
 
 
+def extract_and_repair_json(raw: str) -> Dict[str, Any]:
+    text = raw.strip()
+    if text.startswith("```json"):
+        text = text[7:]
+    elif text.startswith("```"):
+        text = text[3:]
+    if text.endswith("```"):
+        text = text[:-3]
+    text = text.strip()
+
+    # Fast path: try standard loads
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Find outermost { }
+    first_brace = text.find("{")
+    last_brace = text.rfind("}")
+    if first_brace != -1 and last_brace != -1 and last_brace > first_brace:
+        candidate = text[first_brace : last_brace + 1]
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            pass
+
+    # If truncated or unclosed, balance quotes, braces, brackets
+    if first_brace != -1:
+        text = text[first_brace:]
+
+    stack = []
+    in_str = False
+    esc = False
+    chars = []
+    for c in text:
+        if esc:
+            chars.append(c)
+            esc = False
+            continue
+        if c == "\\":
+            esc = True
+            chars.append(c)
+            continue
+        if c == '"':
+            in_str = not in_str
+            chars.append(c)
+            continue
+        if not in_str:
+            if c in ("{", "["):
+                stack.append(c)
+            elif c == "}" and stack and stack[-1] == "{":
+                stack.pop()
+            elif c == "]" and stack and stack[-1] == "[":
+                stack.pop()
+        chars.append(c)
+
+    repaired = "".join(chars)
+    if in_str:
+        repaired += '"'
+    repaired = repaired.rstrip()
+    while repaired and repaired[-1] in (",", ":"):
+        repaired = repaired[:-1].rstrip()
+    while stack:
+        top = stack.pop()
+        repaired += "}" if top == "{" else "]"
+
+    try:
+        return json.loads(repaired)
+    except Exception as err:
+        raise ValueError(f"Model output is not valid JSON: {raw[:150]}...") from err
+
+
 class OllamaClient:
     def __init__(
         self,
@@ -79,7 +151,7 @@ class OllamaClient:
         attempt: int = 1,
         model: Optional[str] = None,
         trace_span: bool = False,
-        num_predict: int = 768,
+        num_predict: int = 1200,
     ) -> Tuple_Response:
         """
         Calls Ollama /api/chat with format=<JSON Schema>, parsing to response_model.
@@ -122,10 +194,7 @@ class OllamaClient:
 
                 raw_content = data.get("message", {}).get("content", "").strip()
 
-                try:
-                    parsed_json = json.loads(raw_content)
-                except json.JSONDecodeError as err:
-                    raise ValueError(f"Model output is not valid JSON: {raw_content[:100]}...") from err
+                parsed_json = extract_and_repair_json(raw_content)
 
                 try:
                     parsed_obj = response_model.model_validate(parsed_json)
