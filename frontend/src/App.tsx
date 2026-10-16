@@ -53,7 +53,7 @@ export const App: React.FC = () => {
 
             <div className="hidden md:flex items-center gap-2 border-l border-zinc-800 pl-4">
               <a
-                href="https://github.com"
+                href="https://github.com/Rish-51/week2"
                 target="_blank"
                 rel="noreferrer"
                 className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors flex items-center gap-1.5 text-xs font-mono"
