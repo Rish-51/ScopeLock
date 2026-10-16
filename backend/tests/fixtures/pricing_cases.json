@@ -1,0 +1,145 @@
+[
+  {
+    "name": "Single milestone with NONE complexity",
+    "inputs": {
+      "hourly_rate": 100.0,
+      "currency": "USD",
+      "contingency_percent": 20,
+      "requirements": [
+        {
+          "id": "R1",
+          "summary": "Basic static landing page",
+          "kind": "FUNCTIONAL",
+          "source_quote": "landing page",
+          "complexity_tags": ["NONE"]
+        }
+      ],
+      "milestones": [
+        {
+          "id": "M1",
+          "title": "Setup & Landing Page",
+          "objective": "Build static site",
+          "deliverables": ["HTML/CSS"],
+          "requirement_ids": ["R1"],
+          "hours_min": 10,
+          "hours_max": 20,
+          "depends_on": []
+        }
+      ]
+    },
+    "expected": {
+      "hours_min_adjusted": 10.0,
+      "hours_max_adjusted": 20.0,
+      "price_low": 1000.0,
+      "price_high": 2400.0,
+      "recommended_fixed_price": 2400.0,
+      "multipliers_applied": [],
+      "payment_schedule": [
+        {"label": "Deposit", "percent": 30, "amount": 720.0},
+        {"label": "Mid-point demo", "percent": 40, "amount": 960.0},
+        {"label": "Final sign-off", "percent": 30, "amount": 720.0}
+      ]
+    }
+  },
+  {
+    "name": "Multiple milestones exercising MAX tag multiplier rule",
+    "inputs": {
+      "hourly_rate": 120.0,
+      "currency": "USD",
+      "contingency_percent": 20,
+      "requirements": [
+        {
+          "id": "R1",
+          "summary": "User authentication",
+          "kind": "FUNCTIONAL",
+          "source_quote": "login with email",
+          "complexity_tags": ["AUTH"]
+        },
+        {
+          "id": "R2",
+          "summary": "Stripe checkout and webhook processing",
+          "kind": "FUNCTIONAL",
+          "source_quote": "accept card payments",
+          "complexity_tags": ["PAYMENTS", "THIRD_PARTY_API"]
+        }
+      ],
+      "milestones": [
+        {
+          "id": "M1",
+          "title": "Auth Setup",
+          "objective": "Implement user auth",
+          "deliverables": ["Auth endpoints"],
+          "requirement_ids": ["R1"],
+          "hours_min": 10,
+          "hours_max": 20,
+          "depends_on": []
+        },
+        {
+          "id": "M2",
+          "title": "Payment Flow",
+          "objective": "Integrate payments",
+          "deliverables": ["Checkout & webhooks"],
+          "requirement_ids": ["R1", "R2"],
+          "hours_min": 20,
+          "hours_max": 40,
+          "depends_on": ["M1"]
+        }
+      ]
+    },
+    "expected": {
+      "hours_min_adjusted": 40.5,
+      "hours_max_adjusted": 81.0,
+      "price_low": 4860.0,
+      "price_high": 11664.0,
+      "recommended_fixed_price": 11664.0,
+      "multipliers_applied": ["AUTH: 1.25x", "PAYMENTS: 1.4x", "THIRD_PARTY_API: 1.35x"],
+      "payment_schedule": [
+        {"label": "Deposit", "percent": 30, "amount": 3499.2},
+        {"label": "Mid-point demo", "percent": 40, "amount": 4665.6},
+        {"label": "Final sign-off", "percent": 30, "amount": 3499.2}
+      ]
+    }
+  },
+  {
+    "name": "High compliance requirement with 25% contingency",
+    "inputs": {
+      "hourly_rate": 150.0,
+      "currency": "USD",
+      "contingency_percent": 25,
+      "requirements": [
+        {
+          "id": "R1",
+          "summary": "HIPAA compliance audit logging",
+          "kind": "NON_FUNCTIONAL",
+          "source_quote": "must be HIPAA compliant",
+          "complexity_tags": ["COMPLIANCE"]
+        }
+      ],
+      "milestones": [
+        {
+          "id": "M1",
+          "title": "Compliance & Security Hardening",
+          "objective": "Audit trails & encryption",
+          "deliverables": ["Security audit report"],
+          "requirement_ids": ["R1"],
+          "hours_min": 16,
+          "hours_max": 32,
+          "depends_on": []
+        }
+      ]
+    },
+    "expected": {
+      "hours_min_adjusted": 24.0,
+      "hours_max_adjusted": 48.0,
+      "price_low": 3600.0,
+      "price_high": 9000.0,
+      "recommended_fixed_price": 9000.0,
+      "multipliers_applied": ["COMPLIANCE: 1.5x"],
+      "payment_schedule": [
+        {"label": "Deposit", "percent": 30, "amount": 2700.0},
+        {"label": "Mid-point demo", "percent": 40, "amount": 3600.0},
+        {"label": "Final sign-off", "percent": 30, "amount": 2700.0}
+      ]
+    }
+  }
+]

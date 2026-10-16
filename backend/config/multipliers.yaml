@@ -1,0 +1,21 @@
+multipliers:
+  THIRD_PARTY_API: 1.35
+  PAYMENTS: 1.40
+  AUTH: 1.25
+  COMPLIANCE: 1.50
+  REALTIME: 1.30
+  MOBILE_RELEASE: 1.20
+  AI_ML: 1.40
+  NONE: 1.00
+
+defaults:
+  hourly_rate: 120.0
+  currency: "USD"
+  contingency_percent: 20
+  payment_schedule:
+    - label: "Deposit"
+      percent: 30
+    - label: "Mid-point demo"
+      percent: 40
+    - label: "Final sign-off"
+      percent: 30
