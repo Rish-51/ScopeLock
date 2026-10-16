@@ -11,6 +11,10 @@ import os
 import sys
 from pathlib import Path
 
+# Ensure real-time line buffered console output
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(line_buffering=True)
+
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -82,7 +86,9 @@ async def run_smoke_test():
         return True
 
     except Exception as e:
-        print(f"[Gate 0] Structured chat failed: {e}")
+        import traceback
+        print(f"[Gate 0] Structured chat failed: {repr(e)}")
+        traceback.print_exc()
         return False
 
 

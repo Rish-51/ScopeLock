@@ -51,7 +51,7 @@ class OllamaClient:
         base_url: Optional[str] = None,
         default_model: Optional[str] = None,
         num_ctx: Optional[int] = None,
-        timeout: float = 120.0,
+        timeout: float = 600.0,
     ):
         self.base_url = (base_url or settings.ollama_host).rstrip("/")
         self.default_model = default_model or settings.scopelock_model
@@ -105,6 +105,8 @@ class OllamaClient:
                     resp = await client.post(f"{self.base_url}/api/chat", json=payload)
                 except httpx.ConnectError as exc:
                     raise RuntimeError(f"Ollama is unreachable at {self.base_url}: {exc}") from exc
+                except httpx.TimeoutException as exc:
+                    raise TimeoutError(f"Ollama request timed out after {self.timeout}s during model inference: {exc}") from exc
 
                 if resp.status_code != 200:
                     raise RuntimeError(f"Ollama returned HTTP {resp.status_code}: {resp.text}")
