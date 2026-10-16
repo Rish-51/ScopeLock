@@ -1,0 +1,381 @@
+{
+  "proposal": {
+    "model": "gemma4:e4b",
+    "requirements": {
+      "project_title": "PawSnap: Instagram for Pets MVP",
+      "one_line_summary": "Photo-sharing mobile application exclusively for pets and pet parents with in-app purchases and real-time feeds.",
+      "stated_platform_or_stack": [
+        "React Native",
+        "iOS App Store IAP",
+        "Google Play Billing",
+        "OAuth 2.0"
+      ],
+      "requirements": [
+        {
+          "id": "R1",
+          "summary": "Dual OAuth authentication (Apple ID and Google OAuth) with email password reset.",
+          "kind": "FUNCTIONAL",
+          "source_quote": "sign up and login with Apple ID and Google OAuth",
+          "complexity_tags": ["AUTH"]
+        },
+        {
+          "id": "R2",
+          "summary": "Multi-pet profile management supporting up to 5 profiles per user.",
+          "kind": "FUNCTIONAL",
+          "source_quote": "create up to 5 pet profiles with breed, age, and bio",
+          "complexity_tags": ["NONE"]
+        },
+        {
+          "id": "R3",
+          "summary": "Vertical scrolling feed with real-time like counters and instant push notifications.",
+          "kind": "FUNCTIONAL",
+          "source_quote": "vertical scrolling photo feed of followed pets with realtime like counters and instant push notifications",
+          "complexity_tags": ["REALTIME"]
+        },
+        {
+          "id": "R4",
+          "summary": "In-app camera with custom sticker overlays and image cropping.",
+          "kind": "FUNCTIONAL",
+          "source_quote": "Direct camera capture with custom animal stickers and photo cropping",
+          "complexity_tags": ["MOBILE_RELEASE"]
+        },
+        {
+          "id": "R5",
+          "summary": "In-app purchases integration for 'Treat packs' virtual currency.",
+          "kind": "FUNCTIONAL",
+          "source_quote": "buy 'Treat packs' (virtual currency) using Apple App Store In-App Purchases and Google Play Billing",
+          "complexity_tags": ["PAYMENTS", "MOBILE_RELEASE"]
+        },
+        {
+          "id": "R6",
+          "summary": "Community moderation and image reporting tool for banned users.",
+          "kind": "FUNCTIONAL",
+          "source_quote": "Basic image reporting for inappropriate content",
+          "complexity_tags": ["NONE"]
+        }
+      ]
+    },
+    "risks": {
+      "risks": [
+        {
+          "title": "Store In-App Purchase Verification & Receipt Validation",
+          "category": "PAYMENTS",
+          "severity": "HIGH",
+          "description": "Apple App Store Server Notifications and Google Play Real-Time Developer Notifications (RTDN) require a secure backend webhook listener with cryptographic signature verification to prevent fraudulent coin grants.",
+          "mitigation": "Implement server-side receipt validation via App Store Server API and Google Play Developer API with idempotent transaction tokens.",
+          "client_question": "Do you have existing Apple Developer Organization and Google Play Console developer accounts enrolled with banking details set up?",
+          "requirement_ids": ["R5"]
+        },
+        {
+          "title": "Real-time Push Notification Fan-Out & Rate Limits",
+          "category": "PERFORMANCE",
+          "severity": "MEDIUM",
+          "description": "Immediate push notifications on viral pet posts can flood APNs/FCM thresholds, resulting in throttling or server CPU spikes.",
+          "mitigation": "Use an asynchronous queue (e.g., Redis Celery/BullMQ) to batch notification payloads and debounce repeated activity bursts.",
+          "client_question": "What is the expected initial user count and daily active sessions for the launch marketing campaign?",
+          "requirement_ids": ["R3"]
+        },
+        {
+          "title": "Multi-Platform Camera & Sticker Performance",
+          "category": "INTEGRATION",
+          "severity": "LOW",
+          "description": "Custom image rendering and stickers on low-end Android devices can lead to frame drops during viewfinder capture.",
+          "mitigation": "Pre-rasterize SVG stickers and offload final photo compositing to native image rendering threads.",
+          "client_question": "Are sticker assets provided as vector SVGs or high-resolution PNG sprite sheets?",
+          "requirement_ids": ["R4"]
+        }
+      ],
+      "scope_creep_warnings": [
+        {
+          "vague_quote": "completely bug-free and scale infinitely without any slowdown",
+          "why_dangerous": "Zero-bug guarantees and 'infinite scaling' are mathematically impossible non-functional assertions that invite open-ended unpaid optimization cycles.",
+          "suggested_sow_clause": "System architecture is benchmarked and sized to support up to 5,000 concurrent active users and a 99.5% uptime SLA. Bug fixes are guaranteed within a 30-day post-launch warranty window for severity 1 and 2 issues."
+        },
+        {
+          "vague_quote": "launch in the App Store within 4 weeks",
+          "why_dangerous": "Apple App Review and Google Play closed testing tracks have uncontrollable review timelines (typically 3 to 7 business days) outside the developer's control.",
+          "suggested_sow_clause": "Milestone delivery dates reflect code completion and TestFlight submission. Consultant is not liable for delays arising from third-party app store review queues or credential verification holds."
+        }
+      ],
+      "assumptions": [
+        "Client provides Apple Developer ($99/yr) and Google Play ($25) active developer credentials.",
+        "Graphic assets, brand colors, and pet sticker artwork will be supplied in Figma format prior to Sprint 2.",
+        "Email delivery service (e.g. Resend / SendGrid) account will be provided for password reset flows."
+      ],
+      "out_of_scope": [
+        "Desktop web application (iOS and Android mobile only).",
+        "Video recording and live streaming features.",
+        "Cryptocurrency or third-party web payments outside the official Apple/Google store channels."
+      ]
+    },
+    "plan": {
+      "milestones": [
+        {
+          "id": "M1",
+          "title": "Foundation, Auth & Pet Profiles",
+          "objective": "Establish project architecture, Apple & Google OAuth flows, and multi-pet profile schemas.",
+          "deliverables": [
+            "React Native base template with TypeScript",
+            "Apple ID & Google OAuth login flows",
+            "Pet profile CRUD screens (up to 5 pets)",
+            "Local test suite & CI configuration"
+          ],
+          "requirement_ids": ["R1", "R2"],
+          "hours_min": 24,
+          "hours_max": 38,
+          "depends_on": []
+        },
+        {
+          "id": "M2",
+          "title": "Photo Capture, Camera & Feed",
+          "objective": "Build the custom camera capture interface with sticker overlays and the scrolling community feed.",
+          "deliverables": [
+            "Camera module with animal sticker selector",
+            "Image cropping and CDN upload pipeline",
+            "Chronological pet photo feed with like counters",
+            "Websocket / Push notification dispatch listener"
+          ],
+          "requirement_ids": ["R3", "R4"],
+          "hours_min": 32,
+          "hours_max": 52,
+          "depends_on": ["M1"]
+        },
+        {
+          "id": "M3",
+          "title": "In-App Purchases & Virtual Currency",
+          "objective": "Integrate Apple In-App Purchases and Google Play Billing for Treat Packs with secure server-side validation.",
+          "deliverables": [
+            "StoreKit 2 / Google Play Billing integration",
+            "Server receipt verification webhooks",
+            "Treat pack ledger & balance display",
+            "Creator tipping interaction"
+          ],
+          "requirement_ids": ["R5"],
+          "hours_min": 28,
+          "hours_max": 44,
+          "depends_on": ["M1", "M2"]
+        },
+        {
+          "id": "M4",
+          "title": "Moderation, QA & Store Submission",
+          "objective": "Implement community content reporting, perform end-to-end regression testing, and cut release builds.",
+          "deliverables": [
+            "Image flagging and report dialogs",
+            "Basic admin ban/moderation endpoint",
+            "TestFlight iOS build & Android Internal Track APK",
+            "App Store metadata and privacy declaration guides"
+          ],
+          "requirement_ids": ["R6"],
+          "hours_min": 18,
+          "hours_max": 28,
+          "depends_on": ["M3"]
+        }
+      ]
+    },
+    "commercial": {
+      "currency": "USD",
+      "hourly_rate": 120.0,
+      "hours_min_adjusted": 133.2,
+      "hours_max_adjusted": 213.6,
+      "contingency_percent": 20,
+      "price_low": 15984.0,
+      "price_high": 30758.4,
+      "recommended_fixed_price": 30758.4,
+      "payment_schedule": [
+        {
+          "label": "Deposit (Project Kickoff)",
+          "percent": 30,
+          "amount": 9227.52
+        },
+        {
+          "label": "Mid-point demo (Camera & Feed)",
+          "percent": 40,
+          "amount": 12303.36
+        },
+        {
+          "label": "Final sign-off (Store Builds Ready)",
+          "percent": 30,
+          "amount": 9227.52
+        }
+      ],
+      "multipliers_applied": [
+        "AUTH: 1.25x",
+        "MOBILE_RELEASE: 1.2x",
+        "PAYMENTS: 1.4x",
+        "REALTIME: 1.3x"
+      ]
+    },
+    "client_email": {
+      "subject": "ScopeLock Scope & Clarification Questions: PawSnap Mobile App MVP",
+      "body": "Hi PawSnap Team,\n\nThank you for sharing the project brief. We have completed an initial technical scoping review for the PawSnap MVP.\n\nTo lock down our milestone deliverables and guarantee on-time delivery, we have three quick technical questions:\n\n1. Store Credentials: Do you already have enrolled, approved Apple Developer and Google Play Console accounts with banking details configured for In-App Purchases?\n2. Assets: Will the custom animal sticker graphics be supplied as vector SVGs or high-resolution PNG sprite sheets?\n3. Infrastructure Scaling: We suggest targeting 5,000 concurrent active users for the launch phase to optimize hosting costs while ensuring zero lag. Does this match your marketing campaign projection?\n\nPlease review the attached milestone plan and payment schedule at your earliest convenience.\n\nBest regards,\nScopeLock Freelance Engineering"
+    },
+    "grounding": {
+      "total_quotes": 8,
+      "grounded_quotes": 8,
+      "ungrounded_ids": []
+    }
+  },
+  "trace": [
+    {
+      "id": "span_inv_01",
+      "parent_id": null,
+      "name": "invoke_agent ScopeLock Scoper",
+      "op": "gen_ai.invoke_agent",
+      "start_ms": 10.0,
+      "duration_ms": 4820.5,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "ScopeLock Scoper",
+        "gen_ai.pipeline.name": "scopelock-scoping",
+        "scopelock.doc_chars": 1245,
+        "scopelock.chunks": 1,
+        "scopelock.grounded_ratio": 1.0
+      }
+    },
+    {
+      "id": "span_doc_01",
+      "parent_id": "span_inv_01",
+      "name": "doc.parse",
+      "op": "doc.parse",
+      "start_ms": 11.2,
+      "duration_ms": 3.4,
+      "status": "ok",
+      "attributes": {
+        "scopelock.doc_chars": 1245
+      }
+    },
+    {
+      "id": "span_chat_01",
+      "parent_id": "span_inv_01",
+      "name": "chat gemma4:e4b [requirements]",
+      "op": "gen_ai.chat",
+      "start_ms": 15.0,
+      "duration_ms": 1420.0,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "ollama",
+        "gen_ai.request.model": "gemma4:e4b",
+        "gen_ai.response.model": "gemma4:e4b",
+        "gen_ai.agent.name": "ScopeLock Scoper",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.request.seed": 42,
+        "gen_ai.usage.input_tokens": 312,
+        "gen_ai.usage.output_tokens": 284,
+        "gen_ai.usage.total_tokens": 596,
+        "scopelock.stage": "requirements",
+        "scopelock.attempt": 1,
+        "scopelock.load_ms": 48.2,
+        "scopelock.num_ctx": 16384
+      }
+    },
+    {
+      "id": "span_chat_02",
+      "parent_id": "span_inv_01",
+      "name": "chat gemma4:e4b [risks]",
+      "op": "gen_ai.chat",
+      "start_ms": 1438.0,
+      "duration_ms": 1610.5,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "ollama",
+        "gen_ai.request.model": "gemma4:e4b",
+        "gen_ai.response.model": "gemma4:e4b",
+        "gen_ai.agent.name": "ScopeLock Scoper",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.request.seed": 42,
+        "gen_ai.usage.input_tokens": 490,
+        "gen_ai.usage.output_tokens": 340,
+        "gen_ai.usage.total_tokens": 830,
+        "scopelock.stage": "risks",
+        "scopelock.attempt": 1,
+        "scopelock.load_ms": 1.2,
+        "scopelock.num_ctx": 16384
+      }
+    },
+    {
+      "id": "span_chat_03",
+      "parent_id": "span_inv_01",
+      "name": "chat gemma4:e4b [milestones]",
+      "op": "gen_ai.chat",
+      "start_ms": 3051.0,
+      "duration_ms": 1120.0,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "ollama",
+        "gen_ai.request.model": "gemma4:e4b",
+        "gen_ai.response.model": "gemma4:e4b",
+        "gen_ai.agent.name": "ScopeLock Scoper",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.request.seed": 42,
+        "gen_ai.usage.input_tokens": 580,
+        "gen_ai.usage.output_tokens": 260,
+        "gen_ai.usage.total_tokens": 840,
+        "scopelock.stage": "milestones",
+        "scopelock.attempt": 1,
+        "scopelock.load_ms": 1.1,
+        "scopelock.num_ctx": 16384
+      }
+    },
+    {
+      "id": "span_tool_01",
+      "parent_id": "span_inv_01",
+      "name": "execute_tool verify_quotes",
+      "op": "gen_ai.execute_tool",
+      "start_ms": 4173.0,
+      "duration_ms": 1.8,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "execute_tool",
+        "gen_ai.tool.name": "verify_quotes",
+        "gen_ai.agent.name": "ScopeLock Scoper"
+      }
+    },
+    {
+      "id": "span_tool_02",
+      "parent_id": "span_inv_01",
+      "name": "execute_tool compute_pricing",
+      "op": "gen_ai.execute_tool",
+      "start_ms": 4175.0,
+      "duration_ms": 0.9,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "execute_tool",
+        "gen_ai.tool.name": "compute_pricing",
+        "gen_ai.agent.name": "ScopeLock Scoper"
+      }
+    },
+    {
+      "id": "span_chat_04",
+      "parent_id": "span_inv_01",
+      "name": "chat gemma4:e4b [client_email]",
+      "op": "gen_ai.chat",
+      "start_ms": 4177.0,
+      "duration_ms": 650.0,
+      "status": "ok",
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "ollama",
+        "gen_ai.request.model": "gemma4:e4b",
+        "gen_ai.response.model": "gemma4:e4b",
+        "gen_ai.agent.name": "ScopeLock Scoper",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.request.seed": 42,
+        "gen_ai.usage.input_tokens": 290,
+        "gen_ai.usage.output_tokens": 150,
+        "gen_ai.usage.total_tokens": 440,
+        "scopelock.stage": "client_email",
+        "scopelock.attempt": 1,
+        "scopelock.load_ms": 1.0,
+        "scopelock.num_ctx": 16384
+      }
+    }
+  ],
+  "brief_text": "# Project Brief: \"PawSnap\" - Instagram for Pets MVP\n\n## Overview\nWe are looking for a skilled freelance mobile engineer to build the MVP of PawSnap, a photo-sharing mobile application dedicated exclusively to pets and pet parents.\n\n## Key Functional Requirements\n1. User Authentication: Users should be able to sign up and login with Apple ID and Google OAuth. We also need password reset via email.\n2. Pet Profiles: Users can create up to 5 pet profiles with breed, age, and bio.\n3. Feed & Realtime Activity: A vertical scrolling photo feed of followed pets with realtime like counters and instant push notifications when someone comments.\n4. Photo Filters & Camera: Direct camera capture with custom animal stickers and photo cropping.\n5. In-App Purchases: Pet parents should be able to buy 'Treat packs' (virtual currency) using Apple App Store In-App Purchases and Google Play Billing to reward content creators.\n6. Moderation & Flagging: Basic image reporting for inappropriate content.\n\n## Technical Constraints & Ambiguities\n- The app should work smoothly on both iOS and Android.\n- We want the app to be completely bug-free and scale infinitely without any slowdown.\n- We expect to launch in the App Store within 4 weeks.\n\n## Deliverables\n- Source code in GitHub repository.\n- TestFlight build for iOS and Internal Testing APK for Android.\n- Basic admin dashboard for banned users.",
+  "char_count": 1245,
+  "estimated_tokens": 311,
+  "is_chunked": false
+}
