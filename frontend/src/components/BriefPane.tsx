@@ -76,15 +76,36 @@ export const BriefPane: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-full bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-xl">
+    <div
+      className="flex flex-col h-full rounded-2xl overflow-hidden shadow-xl"
+      style={{
+        backgroundColor: "var(--bg-surface)",
+        border: "1px solid var(--border-subtle)",
+      }}
+    >
       {/* Pane Header */}
-      <div className="p-4 border-b border-zinc-800 bg-zinc-950/40 flex items-center justify-between">
+      <div
+        className="p-4 flex items-center justify-between"
+        style={{
+          borderBottom: "1px solid var(--border-subtle)",
+          backgroundColor: "var(--bg-canvas)",
+        }}
+      >
         <div className="flex items-center gap-2">
-          <FileText className="w-4 h-4 text-emerald-400" />
-          <h2 className="text-xs font-bold text-white uppercase tracking-wider">
+          <FileText className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
+          <h2
+            className="text-xs font-bold uppercase tracking-wider"
+            style={{ color: "var(--text-primary)" }}
+          >
             Client Brief & Grounding
           </h2>
-          <span className="text-[11px] font-mono text-zinc-500 bg-zinc-800/80 px-2 py-0.5 rounded">
+          <span
+            className="text-[11px] font-mono px-2 py-0.5 rounded"
+            style={{
+              backgroundColor: "var(--bg-elevated)",
+              color: "var(--text-muted)",
+            }}
+          >
             {filename || "brief.txt"}
           </span>
         </div>
@@ -92,14 +113,25 @@ export const BriefPane: React.FC = () => {
         {/* Grounding Badge */}
         {grounding && (
           <div
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
-              grounding.ungrounded_ids.length === 0
-                ? "bg-emerald-950/60 border-emerald-500/40 text-emerald-300"
-                : "bg-amber-950/60 border-amber-500/40 text-amber-300"
-            }`}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+            style={{
+              backgroundColor:
+                grounding.ungrounded_ids.length === 0
+                  ? "var(--status-safe-bg)"
+                  : "#2a1e12",
+              border: `1px solid ${
+                grounding.ungrounded_ids.length === 0
+                  ? "var(--status-safe-border)"
+                  : "#5c3d1d"
+              }`,
+              color:
+                grounding.ungrounded_ids.length === 0
+                  ? "var(--status-safe-fg)"
+                  : "#fcd34d",
+            }}
           >
             {grounding.ungrounded_ids.length === 0 ? (
-              <CheckCircle className="w-3 h-3 text-emerald-400" />
+              <CheckCircle className="w-3 h-3" style={{ color: "var(--status-safe-fg)" }} />
             ) : (
               <AlertTriangle className="w-3 h-3 text-amber-400" />
             )}
@@ -111,21 +143,35 @@ export const BriefPane: React.FC = () => {
       </div>
 
       {/* Quote Navigation Bar */}
-      <div className="p-2.5 bg-zinc-950/70 border-b border-zinc-800/80 overflow-x-auto flex gap-1.5 text-[11px] font-mono">
-        <span className="text-zinc-500 shrink-0 self-center px-1">Jump to:</span>
+      <div
+        className="p-2.5 overflow-x-auto flex gap-1.5 text-[11px] font-mono"
+        style={{
+          borderBottom: "1px solid var(--border-subtle)",
+          backgroundColor: "var(--bg-input)",
+        }}
+      >
+        <span className="shrink-0 self-center px-1" style={{ color: "var(--text-muted)" }}>
+          Jump to:
+        </span>
         {highlights.map((h) => {
           const isSelected = selectedHighlightId === h.id;
           return (
             <button
               key={h.id}
               onClick={() => handleHighlightClick(h)}
-              className={`shrink-0 px-2 py-0.5 rounded cursor-pointer transition-all border ${
-                isSelected
-                  ? "bg-emerald-500/30 text-white border-emerald-400"
-                  : h.kind === "requirement"
-                  ? "bg-blue-950/40 hover:bg-blue-900/50 text-blue-300 border-blue-800/50"
-                  : "bg-amber-950/40 hover:bg-amber-900/50 text-amber-300 border-amber-800/50"
-              }`}
+              className="shrink-0 px-2 py-0.5 rounded cursor-pointer transition-all border"
+              style={{
+                backgroundColor: isSelected
+                  ? "var(--pill-active-bg)"
+                  : "var(--bg-elevated)",
+                borderColor: isSelected
+                  ? "var(--border-focus)"
+                  : "var(--border-subtle)",
+                color: isSelected
+                  ? "var(--pill-active-fg)"
+                  : "var(--text-secondary)",
+                fontWeight: isSelected ? 600 : 400,
+              }}
             >
               {h.id}
             </button>
@@ -133,25 +179,50 @@ export const BriefPane: React.FC = () => {
         })}
       </div>
 
-      {/* Brief Body Text */}
-      <div className="flex-1 p-5 overflow-y-auto font-mono text-xs leading-relaxed text-zinc-300 whitespace-pre-wrap select-text">
+      {/* Brief Body Text (Markdown Editor Well) */}
+      <div
+        className="flex-1 p-5 overflow-y-auto font-mono text-xs leading-relaxed whitespace-pre-wrap select-text"
+        style={{
+          backgroundColor: "var(--bg-input)",
+          color: "var(--text-primary)",
+        }}
+      >
         {rawBriefText || "No brief text provided."}
       </div>
 
       {/* Footer Legend */}
-      <div className="p-3 border-t border-zinc-800 bg-zinc-950/60 flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-400">
+      <div
+        className="p-3 flex flex-wrap items-center justify-between gap-2 text-[11px]"
+        style={{
+          borderTop: "1px solid var(--border-subtle)",
+          backgroundColor: "var(--bg-canvas)",
+          color: "var(--text-muted)",
+        }}
+      >
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-blue-500/40 border border-blue-400" />
-            <span>Requirement Quote</span>
+            <span
+              className="w-2.5 h-2.5 rounded-sm"
+              style={{
+                backgroundColor: "var(--bg-elevated)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            />
+            <span>Requirements</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-amber-500/40 border border-amber-400" />
-            <span>Scope Hazard</span>
+            <span
+              className="w-2.5 h-2.5 rounded-sm"
+              style={{
+                backgroundColor: "var(--status-safe-bg)",
+                border: "1px solid var(--status-safe-border)",
+              }}
+            />
+            <span>Scope Verified</span>
           </span>
         </div>
-        <span className="text-[10px] text-zinc-500">
-          Quotes verified via deterministic substring check
+        <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>
+          Deterministic verbatim quote grounding
         </span>
       </div>
     </div>

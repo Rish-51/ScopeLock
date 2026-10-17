@@ -1,8 +1,55 @@
 @import "tailwindcss";
 
+:root {
+  /* Surface & Canvas (Dark Minimalist Default) */
+  --bg-canvas: #0c0d0f;
+  --bg-surface: #131519;
+  --bg-elevated: #1b1e24;
+  --bg-input: #090a0c;
+
+  /* Borders & Dividers */
+  --border-subtle: #23272f;
+  --border-strong: #333842;
+  --border-focus: #e2e8f0;
+
+  /* Typography */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Primary Action */
+  --accent-primary-bg: #f8fafc;
+  --accent-primary-fg: #090a0c;
+  --accent-primary-hover: #e2e8f0;
+
+  /* Secondary Action */
+  --accent-secondary-bg: #131519;
+  --accent-secondary-border: #334155;
+  --accent-secondary-fg: #cbd5e1;
+  --accent-secondary-hover: #1e2229;
+
+  /* Status & Verification: Zero Content Egress & Offline Safe */
+  --status-safe-bg: #0d281e;
+  --status-safe-border: #154734;
+  --status-safe-fg: #34d399;
+
+  /* Active Segmented Controls */
+  --pill-active-bg: #e2e8f0;
+  --pill-active-fg: #0c0d0f;
+
+  /* Geometry & Shadows */
+  --card-radius: 8px;
+  --input-radius: 6px;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
 @layer base {
   body {
-    @apply bg-zinc-950 text-zinc-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-400 min-h-screen font-sans;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
   }
 }
 
@@ -12,21 +59,21 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(24, 24, 27, 0.5);
+  background: var(--bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(63, 63, 70, 0.6);
+  background: var(--border-subtle);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(113, 113, 122, 0.8);
+  background: var(--border-strong);
 }
 
 /* Print Stylesheet for proposal export */
 @media print {
   body {
     background: #ffffff !important;
-    color: #18181b !important;
+    color: #141413 !important;
   }
   .no-print {
     display: none !important;

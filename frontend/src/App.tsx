@@ -12,11 +12,21 @@ export const App: React.FC = () => {
   const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans">
+    <div
+      className="min-h-screen flex flex-col font-sans"
+      style={{ backgroundColor: "var(--bg-canvas)", color: "var(--text-primary)" }}
+    >
       {/* Top Demo Banner if deployed on Render */}
       {isDemoMode && (
-        <div className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2 text-center text-xs text-amber-300 font-medium flex items-center justify-center gap-2">
-          <Sparkles className="w-4 h-4 text-amber-400" />
+        <div
+          className="px-4 py-2 text-center text-xs font-medium flex items-center justify-center gap-2 border-b"
+          style={{
+            backgroundColor: "var(--bg-elevated)",
+            borderColor: "var(--border-subtle)",
+            color: "var(--text-secondary)",
+          }}
+        >
+          <Sparkles className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
           <span>
             <strong>Recorded Run Demo:</strong> This showcase replays an authentic execution recorded from local Gemma 4.
             Run ScopeLock locally to analyze your own NDA briefs offline.
@@ -25,23 +35,47 @@ export const App: React.FC = () => {
       )}
 
       {/* Main Navigation Header */}
-      <header className="border-b border-zinc-800 bg-zinc-900/60 backdrop-blur-md sticky top-0 z-40">
+      <header
+        className="sticky top-0 z-40 backdrop-blur-md border-b"
+        style={{
+          backgroundColor: "var(--bg-surface)",
+          borderColor: "var(--border-subtle)",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-md">
-              <Lock className="w-5 h-5 text-emerald-400" />
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm"
+              style={{
+                backgroundColor: "var(--bg-elevated)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              <Lock className="w-5 h-5" style={{ color: "var(--status-safe-fg)" }} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-white text-base tracking-tight">
+                <span
+                  className="font-extrabold text-base tracking-tight"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   ScopeLock
                 </span>
-                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-zinc-800 text-zinc-400">
+                <span
+                  className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold"
+                  style={{
+                    backgroundColor: "var(--bg-elevated)",
+                    color: "var(--text-muted)",
+                  }}
+                >
                   v0.1.0
                 </span>
               </div>
-              <p className="text-[10px] text-zinc-400 font-mono hidden sm:block">
+              <p
+                className="text-[10px] font-mono hidden sm:block"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 NDA-Safe RFQ & Proposal Scoper
               </p>
             </div>
@@ -51,12 +85,24 @@ export const App: React.FC = () => {
           <div className="flex items-center gap-4">
             <PrivacyBeacon />
 
-            <div className="hidden md:flex items-center gap-2 border-l border-zinc-800 pl-4">
+            <div
+              className="hidden md:flex items-center gap-2 pl-4 border-l"
+              style={{ borderColor: "var(--border-subtle)" }}
+            >
               <a
                 href="https://github.com/Rish-51/week2"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors flex items-center gap-1.5 text-xs font-mono"
+                className="p-2 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-mono"
+                style={{ color: "var(--text-secondary)" }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "var(--text-primary)";
+                  e.currentTarget.style.backgroundColor = "var(--bg-elevated)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "var(--text-secondary)";
+                  e.currentTarget.style.backgroundColor = "transparent";
+                }}
                 title="View GitHub Repository"
               >
                 <Code2 className="w-4 h-4" />
@@ -77,13 +123,20 @@ export const App: React.FC = () => {
       <ExportModal />
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800/80 py-6 px-4 bg-zinc-950 text-xs text-zinc-500">
+      <footer
+        className="py-6 px-4 text-xs border-t"
+        style={{
+          backgroundColor: "var(--bg-canvas)",
+          borderColor: "var(--border-subtle)",
+          color: "var(--text-muted)",
+        }}
+      >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <ShieldCheck className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
             <span>Zero Client-Content Egress: Brief text strictly stays on your local machine.</span>
           </div>
-          <div className="flex items-center gap-4 font-mono text-[11px]">
+          <div className="flex items-center gap-4 font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>
             <span>DEV Hacktoberfest 2026</span>
             <span>•</span>
             <span>Apache-2.0</span>

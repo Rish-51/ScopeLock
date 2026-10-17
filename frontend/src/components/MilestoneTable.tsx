@@ -32,62 +32,98 @@ export const MilestoneTable: React.FC = () => {
     <div className="space-y-6">
       {/* Commercial Overview Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-xl p-3.5 space-y-1">
-          <span className="text-[11px] font-medium text-zinc-400 flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5 text-zinc-500" />
+        <div
+          className="rounded-xl p-3.5 space-y-1"
+          style={{
+            backgroundColor: "var(--bg-input)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          <span className="text-[11px] font-medium flex items-center gap-1" style={{ color: "var(--text-secondary)" }}>
+            <Clock className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
             <span>Base Hours</span>
           </span>
-          <p className="text-base font-bold text-white font-mono">
+          <p className="text-base font-bold font-mono" style={{ color: "var(--text-primary)" }}>
             {baseHoursMin} - {baseHoursMax} hrs
           </p>
-          <span className="text-[10px] text-zinc-500">Unweighted engineering</span>
+          <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>Unweighted engineering</span>
         </div>
 
-        <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-xl p-3.5 space-y-1">
-          <span className="text-[11px] font-medium text-zinc-400 flex items-center gap-1">
-            <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
+        <div
+          className="rounded-xl p-3.5 space-y-1"
+          style={{
+            backgroundColor: "var(--bg-input)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          <span className="text-[11px] font-medium flex items-center gap-1" style={{ color: "var(--text-secondary)" }}>
+            <TrendingUp className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
             <span>Adjusted Effort</span>
           </span>
-          <p className="text-base font-bold text-indigo-300 font-mono">
+          <p className="text-base font-bold font-mono" style={{ color: "var(--text-primary)" }}>
             {comm.hours_min_adjusted.toFixed(1)} - {comm.hours_max_adjusted.toFixed(1)} hrs
           </p>
-          <span className="text-[10px] text-zinc-500">Tag heuristics applied</span>
+          <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>Tag heuristics applied</span>
         </div>
 
-        <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-xl p-3.5 space-y-1">
-          <span className="text-[11px] font-medium text-zinc-400 flex items-center gap-1">
-            <DollarSign className="w-3.5 h-3.5 text-zinc-500" />
+        <div
+          className="rounded-xl p-3.5 space-y-1"
+          style={{
+            backgroundColor: "var(--bg-input)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          <span className="text-[11px] font-medium flex items-center gap-1" style={{ color: "var(--text-secondary)" }}>
+            <DollarSign className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
             <span>Rate & Contingency</span>
           </span>
-          <p className="text-base font-bold text-zinc-200 font-mono">
-            {comm.currency} {comm.hourly_rate} <span className="text-xs text-zinc-400">+{comm.contingency_percent}%</span>
+          <p className="text-base font-bold font-mono" style={{ color: "var(--text-primary)" }}>
+            {comm.currency} {comm.hourly_rate} <span className="text-xs" style={{ color: "var(--text-muted)" }}>+{comm.contingency_percent}%</span>
           </p>
-          <span className="text-[10px] text-zinc-500">Editable parameters</span>
+          <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>Editable parameters</span>
         </div>
 
-        <div className="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-3.5 space-y-1">
-          <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+        <div
+          className="rounded-xl p-3.5 space-y-1"
+          style={{
+            backgroundColor: "var(--status-safe-bg)",
+            border: "1px solid var(--status-safe-border)",
+            color: "var(--status-safe-fg)",
+          }}
+        >
+          <span className="text-[11px] font-medium flex items-center gap-1" style={{ color: "var(--status-safe-fg)" }}>
+            <CheckCircle2 className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
             <span>Recommended Fixed</span>
           </span>
-          <p className="text-base font-extrabold text-emerald-300 font-mono">
+          <p className="text-base font-extrabold font-mono" style={{ color: "var(--status-safe-fg)" }}>
             {comm.currency} {comm.recommended_fixed_price.toLocaleString()}
           </p>
-          <span className="text-[10px] text-emerald-500/80">Deterministic code</span>
+          <span className="text-[10px] opacity-80">Deterministic code</span>
         </div>
       </div>
 
       {/* Applied Multipliers Pill Bar */}
       {comm.multipliers_applied.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 p-3 bg-zinc-950/60 border border-zinc-800 rounded-xl text-xs">
-          <span className="text-zinc-400 font-medium flex items-center gap-1">
-            <Tag className="w-3.5 h-3.5 text-zinc-500" />
+        <div
+          className="flex flex-wrap items-center gap-2 p-3 rounded-xl text-xs"
+          style={{
+            backgroundColor: "var(--bg-input)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          <span className="font-medium flex items-center gap-1" style={{ color: "var(--text-secondary)" }}>
+            <Tag className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
             <span>Multipliers Active:</span>
           </span>
           {comm.multipliers_applied.map((m) => (
             <span
               key={m}
-              className="px-2 py-0.5 rounded-full bg-indigo-950/60 border border-indigo-700/50 text-indigo-300 font-mono text-[11px]"
+              className="px-2 py-0.5 rounded-full font-mono text-[11px]"
+              style={{
+                backgroundColor: "var(--bg-elevated)",
+                border: "1px solid var(--border-subtle)",
+                color: "var(--text-secondary)",
+              }}
             >
               {m}
             </span>
@@ -98,10 +134,10 @@ export const MilestoneTable: React.FC = () => {
       {/* Milestones List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+          <h3 className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--text-secondary)" }}>
             Milestones Breakdown ({milestones.length})
           </h3>
-          <span className="text-xs text-zinc-500 font-mono">
+          <span className="text-xs font-mono" style={{ color: "var(--text-muted)" }}>
             Editing hours live-updates commercial totals
           </span>
         </div>
@@ -109,22 +145,43 @@ export const MilestoneTable: React.FC = () => {
         {milestones.map((m) => (
           <div
             key={m.id}
-            className="p-4 bg-zinc-950/60 border border-zinc-800 hover:border-zinc-700 rounded-xl space-y-3 transition-colors"
+            className="p-4 rounded-xl space-y-3 transition-colors"
+            style={{
+              backgroundColor: "var(--bg-input)",
+              border: "1px solid var(--border-subtle)",
+            }}
           >
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="space-y-1 max-w-lg">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-zinc-800 font-mono font-bold text-xs text-white">
+                  <span
+                    className="px-2 py-0.5 rounded font-mono font-bold text-xs"
+                    style={{
+                      backgroundColor: "var(--bg-elevated)",
+                      color: "var(--text-primary)",
+                      border: "1px solid var(--border-subtle)",
+                    }}
+                  >
                     {m.id}
                   </span>
-                  <h4 className="text-sm font-semibold text-white">{m.title}</h4>
+                  <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                    {m.title}
+                  </h4>
                 </div>
-                <p className="text-xs text-zinc-400">{m.objective}</p>
+                <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                  {m.objective}
+                </p>
               </div>
 
               {/* Hours Inputs */}
-              <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg text-xs font-mono">
-                <span className="text-zinc-500">Hours:</span>
+              <div
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <span style={{ color: "var(--text-muted)" }}>Hours:</span>
                 <input
                   type="number"
                   min="1"
@@ -132,9 +189,20 @@ export const MilestoneTable: React.FC = () => {
                   onChange={(e) =>
                     handleHoursChange(m.id, "hours_min", parseInt(e.target.value) || 0)
                   }
-                  className="w-12 bg-zinc-950 border border-zinc-700 rounded px-1.5 py-0.5 text-white text-center focus:outline-none focus:border-emerald-500"
+                  className="w-12 rounded px-1.5 py-0.5 text-center outline-none"
+                  style={{
+                    backgroundColor: "var(--bg-input)",
+                    border: "1px solid var(--border-subtle)",
+                    color: "var(--text-primary)",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border-focus)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border-subtle)";
+                  }}
                 />
-                <span className="text-zinc-500">-</span>
+                <span style={{ color: "var(--text-muted)" }}>-</span>
                 <input
                   type="number"
                   min="1"
@@ -142,21 +210,35 @@ export const MilestoneTable: React.FC = () => {
                   onChange={(e) =>
                     handleHoursChange(m.id, "hours_max", parseInt(e.target.value) || 0)
                   }
-                  className="w-12 bg-zinc-950 border border-zinc-700 rounded px-1.5 py-0.5 text-white text-center focus:outline-none focus:border-emerald-500"
+                  className="w-12 rounded px-1.5 py-0.5 text-center outline-none"
+                  style={{
+                    backgroundColor: "var(--bg-input)",
+                    border: "1px solid var(--border-subtle)",
+                    color: "var(--text-primary)",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border-focus)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border-subtle)";
+                  }}
                 />
-                <span className="text-zinc-400">hrs</span>
+                <span style={{ color: "var(--text-secondary)" }}>hrs</span>
               </div>
             </div>
 
             {/* Deliverables List */}
-            <div className="pt-2 border-t border-zinc-900">
-              <span className="text-[11px] font-medium text-zinc-500 block mb-1.5">
+            <div className="pt-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+              <span className="text-[11px] font-medium block mb-1.5" style={{ color: "var(--text-muted)" }}>
                 Key Deliverables:
               </span>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-zinc-300 font-mono">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs font-mono" style={{ color: "var(--text-secondary)" }}>
                 {m.deliverables.map((d, i) => (
                   <li key={i} className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: "var(--status-safe-fg)" }}
+                    />
                     <span>{d}</span>
                   </li>
                 ))}
@@ -165,13 +247,18 @@ export const MilestoneTable: React.FC = () => {
 
             {/* Linked Requirement IDs */}
             {m.requirement_ids.length > 0 && (
-              <div className="flex items-center gap-2 text-[11px] text-zinc-500 pt-1">
+              <div className="flex items-center gap-2 text-[11px] pt-1" style={{ color: "var(--text-muted)" }}>
                 <span>Linked requirements:</span>
                 <div className="flex gap-1">
                   {m.requirement_ids.map((rid) => (
                     <span
                       key={rid}
-                      className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[10px]"
+                      className="px-1.5 py-0.5 rounded font-mono text-[10px]"
+                      style={{
+                        backgroundColor: "var(--bg-elevated)",
+                        border: "1px solid var(--border-subtle)",
+                        color: "var(--text-secondary)",
+                      }}
                     >
                       {rid}
                     </span>
@@ -184,13 +271,19 @@ export const MilestoneTable: React.FC = () => {
       </div>
 
       {/* Payment Schedule Card */}
-      <div className="p-4 bg-zinc-950/80 border border-zinc-800 rounded-xl space-y-3">
+      <div
+        className="p-4 rounded-xl space-y-3"
+        style={{
+          backgroundColor: "var(--bg-input)",
+          border: "1px solid var(--border-subtle)",
+        }}
+      >
         <div className="flex items-center justify-between">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-zinc-500" />
+          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--text-secondary)" }}>
+            <Calendar className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
             <span>Recommended Payment Schedule (30 / 40 / 30)</span>
           </h4>
-          <span className="text-xs font-mono font-semibold text-emerald-400">
+          <span className="text-xs font-mono font-semibold" style={{ color: "var(--status-safe-fg)" }}>
             Total: {comm.currency} {comm.recommended_fixed_price.toLocaleString()}
           </span>
         </div>
@@ -199,13 +292,17 @@ export const MilestoneTable: React.FC = () => {
           {comm.payment_schedule.map((step) => (
             <div
               key={step.label}
-              className="p-3 rounded-lg bg-zinc-900/60 border border-zinc-800 space-y-1"
+              className="p-3 rounded-lg space-y-1"
+              style={{
+                backgroundColor: "var(--bg-surface)",
+                border: "1px solid var(--border-subtle)",
+              }}
             >
               <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-white">{step.label}</span>
-                <span className="font-mono text-zinc-400">{step.percent}%</span>
+                <span className="font-semibold" style={{ color: "var(--text-primary)" }}>{step.label}</span>
+                <span className="font-mono" style={{ color: "var(--text-muted)" }}>{step.percent}%</span>
               </div>
-              <p className="text-sm font-bold font-mono text-emerald-300">
+              <p className="text-sm font-bold font-mono" style={{ color: "var(--status-safe-fg)" }}>
                 {comm.currency} {step.amount.toLocaleString()}
               </p>
             </div>

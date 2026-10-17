@@ -47,18 +47,26 @@ export const RiskPanel: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Filter Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-zinc-950/60 border border-zinc-800 rounded-xl text-xs">
-        <span className="text-zinc-400 font-medium">Filter Severity:</span>
+      <div
+        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl text-xs"
+        style={{
+          backgroundColor: "var(--bg-input)",
+          border: "1px solid var(--border-subtle)",
+        }}
+      >
+        <span className="font-medium" style={{ color: "var(--text-secondary)" }}>Filter Severity:</span>
         <div className="flex gap-1.5">
           {(["ALL", "CRITICAL", "HIGH", "MEDIUM", "LOW"] as const).map((lvl) => (
             <button
               key={lvl}
               onClick={() => setSeverityFilter(lvl)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer border ${
-                severityFilter === lvl
-                  ? "bg-zinc-800 text-white border-zinc-600"
-                  : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 border-transparent"
-              }`}
+              className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer border"
+              style={{
+                backgroundColor: severityFilter === lvl ? "var(--pill-active-bg)" : "transparent",
+                color: severityFilter === lvl ? "var(--pill-active-fg)" : "var(--text-secondary)",
+                borderColor: severityFilter === lvl ? "var(--border-focus)" : "transparent",
+                fontWeight: severityFilter === lvl ? 600 : 400,
+              }}
             >
               {lvl}
             </button>
@@ -69,14 +77,25 @@ export const RiskPanel: React.FC = () => {
       {/* Risks Grid */}
       <div className="space-y-4">
         {filteredRisks.length === 0 ? (
-          <div className="p-8 text-center text-zinc-500 text-sm bg-zinc-950/40 border border-zinc-800 rounded-xl">
+          <div
+            className="p-8 text-center text-sm rounded-xl"
+            style={{
+              backgroundColor: "var(--bg-input)",
+              border: "1px solid var(--border-subtle)",
+              color: "var(--text-muted)",
+            }}
+          >
             No technical risks matching the selected filter.
           </div>
         ) : (
           filteredRisks.map((risk, idx) => (
             <div
               key={idx}
-              className="p-4 bg-zinc-950/60 border border-zinc-800 rounded-xl space-y-3"
+              className="p-4 rounded-xl space-y-3"
+              style={{
+                backgroundColor: "var(--bg-input)",
+                border: "1px solid var(--border-subtle)",
+              }}
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-2">
@@ -89,44 +108,68 @@ export const RiskPanel: React.FC = () => {
                     >
                       {risk.severity}
                     </span>
-                    <span className="text-xs font-mono text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
+                    <span
+                      className="text-xs font-mono px-2 py-0.5 rounded"
+                      style={{
+                        backgroundColor: "var(--bg-surface)",
+                        border: "1px solid var(--border-subtle)",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
                       {risk.category}
                     </span>
                   </div>
-                  <h4 className="text-sm font-semibold text-white">{risk.title}</h4>
+                  <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{risk.title}</h4>
                 </div>
               </div>
 
               {/* Description & Mitigation */}
-              <p className="text-xs text-zinc-300 leading-relaxed">{risk.description}</p>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{risk.description}</p>
 
-              <div className="p-3 bg-zinc-900/80 border border-zinc-800 rounded-lg space-y-1">
-                <span className="text-[11px] font-semibold text-emerald-400 flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <div
+                className="p-3 rounded-lg space-y-1"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-subtle)",
+                }}
+              >
+                <span className="text-[11px] font-semibold flex items-center gap-1.5" style={{ color: "var(--status-safe-fg)" }}>
+                  <ShieldCheck className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
                   <span>Mitigation Strategy:</span>
                 </span>
-                <p className="text-xs text-zinc-300">{risk.mitigation}</p>
+                <p className="text-xs" style={{ color: "var(--text-primary)" }}>{risk.mitigation}</p>
               </div>
 
               {/* Client Question */}
               {risk.client_question && (
-                <div className="p-3 bg-indigo-950/30 border border-indigo-800/40 rounded-lg flex items-center justify-between gap-3">
+                <div
+                  className="p-3 rounded-lg flex items-center justify-between gap-3"
+                  style={{
+                    backgroundColor: "var(--bg-elevated)",
+                    border: "1px solid var(--border-subtle)",
+                  }}
+                >
                   <div className="space-y-0.5">
-                    <span className="text-[11px] font-semibold text-indigo-300 flex items-center gap-1">
-                      <HelpCircle className="w-3.5 h-3.5" />
+                    <span className="text-[11px] font-semibold flex items-center gap-1" style={{ color: "var(--text-secondary)" }}>
+                      <HelpCircle className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
                       <span>Clarification for Client:</span>
                     </span>
-                    <p className="text-xs text-zinc-200 italic">
+                    <p className="text-xs italic" style={{ color: "var(--text-primary)" }}>
                       "{risk.client_question}"
                     </p>
                   </div>
                   <button
                     onClick={() => handleCopyQuestion(risk.client_question, idx)}
-                    className="p-1.5 rounded-lg bg-indigo-900/40 hover:bg-indigo-800/60 border border-indigo-700/50 text-indigo-200 cursor-pointer transition-colors shrink-0"
+                    className="p-1.5 rounded-lg cursor-pointer transition-colors shrink-0"
+                    style={{
+                      backgroundColor: "var(--bg-surface)",
+                      border: "1px solid var(--border-subtle)",
+                      color: "var(--text-secondary)",
+                    }}
                     title="Copy question"
                   >
                     {copiedQuestionIdx === idx ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <Check className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
@@ -141,15 +184,21 @@ export const RiskPanel: React.FC = () => {
       {/* Assumptions & Out-of-Scope Split */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
         {/* Assumptions */}
-        <div className="p-4 bg-zinc-950/60 border border-zinc-800 rounded-xl space-y-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-1.5">
-            <ClipboardList className="w-3.5 h-3.5 text-zinc-500" />
+        <div
+          className="p-4 rounded-xl space-y-2"
+          style={{
+            backgroundColor: "var(--bg-input)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--text-secondary)" }}>
+            <ClipboardList className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
             <span>Assumptions ({assumptions.length})</span>
           </h4>
-          <ul className="space-y-1.5 text-xs text-zinc-300">
+          <ul className="space-y-1.5 text-xs" style={{ color: "var(--text-secondary)" }}>
             {assumptions.map((a, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span className="text-zinc-500">•</span>
+                <span style={{ color: "var(--text-muted)" }}>•</span>
                 <span>{a}</span>
               </li>
             ))}
@@ -157,15 +206,21 @@ export const RiskPanel: React.FC = () => {
         </div>
 
         {/* Out-of-Scope */}
-        <div className="p-4 bg-zinc-950/60 border border-zinc-800 rounded-xl space-y-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
-            <Ban className="w-3.5 h-3.5 text-red-400" />
+        <div
+          className="p-4 rounded-xl space-y-2"
+          style={{
+            backgroundColor: "var(--bg-input)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          <h4 className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+            <Ban className="w-3.5 h-3.5 text-rose-400" />
             <span>Explicitly Out-of-Scope ({outOfScope.length})</span>
           </h4>
-          <ul className="space-y-1.5 text-xs text-zinc-300">
+          <ul className="space-y-1.5 text-xs" style={{ color: "var(--text-secondary)" }}>
             {outOfScope.map((o, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span className="text-red-500/70">•</span>
+                <span className="text-rose-400/70">•</span>
                 <span>{o}</span>
               </li>
             ))}
