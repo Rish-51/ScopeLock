@@ -452,8 +452,11 @@ export const IngestionDropzone: React.FC = () => {
                 color: "var(--text-primary)",
               }}
             >
-              <option value="gemma4:e4b">Gemma 4 4B (Installed / Default)</option>
-              <option value="gemma4:e2b">Gemma 4 2B (Fast / CPU)</option>
+              <option value="gemma4:e4b">Gemma 4 4B (Installed / Recommended)</option>
+              <option value="gemma4:e2b">Gemma 4 2B (Lightweight / Fast CPU)</option>
+              <option value="llama3.2:1b">Llama 3.2 1B (Ultra-light ~1.3GB)</option>
+              <option value="llama3.2:3b">Llama 3.2 3B (Fast ~2.0GB)</option>
+              <option value="qwen2.5:1.5b">Qwen 2.5 1.5B (Compact structured)</option>
             </select>
           </div>
         </div>
@@ -546,7 +549,18 @@ export const IngestionDropzone: React.FC = () => {
               ) : (
                 <>
                   <Sparkles className="w-4 h-4 shrink-0" />
-                  <span>Scope with Local {selectedModel.includes("e2b") ? "Gemma 2B" : "Gemma 4B"}</span>
+                  <span>
+                    Scope with Local{" "}
+                    {selectedModel.includes("e2b")
+                      ? "Gemma 2B"
+                      : selectedModel.includes("e4b")
+                      ? "Gemma 4B"
+                      : selectedModel.includes("1b")
+                      ? "Llama 1B"
+                      : selectedModel.includes("3b")
+                      ? "Llama 3B"
+                      : selectedModel}
+                  </span>
                 </>
               )}
             </button>

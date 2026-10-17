@@ -34,13 +34,13 @@ export const RiskPanel: React.FC = () => {
   const getSeverityBadge = (severity: Severity) => {
     switch (severity) {
       case "CRITICAL":
-        return "bg-red-950/80 text-red-300 border-red-700/60";
+        return "bg-[#FFF0EB] text-[#C2410C] border-[#FDBA74]";
       case "HIGH":
-        return "bg-orange-950/80 text-orange-300 border-orange-700/60";
+        return "bg-[#FFF7ED] text-[#EA580C] border-[#FED7AA]";
       case "MEDIUM":
-        return "bg-amber-950/80 text-amber-300 border-amber-700/60";
+        return "bg-[#FDF4FF] text-[#7A407E] border-[#E9D5FF]";
       case "LOW":
-        return "bg-zinc-800 text-zinc-300 border-zinc-700";
+        return "bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]";
     }
   };
 
@@ -213,14 +213,14 @@ export const RiskPanel: React.FC = () => {
             border: "1px solid var(--border-subtle)",
           }}
         >
-          <h4 className="text-xs font-bold uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
-            <Ban className="w-3.5 h-3.5 text-rose-400" />
+          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--accent-primary-hover)" }}>
+            <Ban className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-hover)" }} />
             <span>Explicitly Out-of-Scope ({outOfScope.length})</span>
           </h4>
           <ul className="space-y-1.5 text-xs" style={{ color: "var(--text-secondary)" }}>
             {outOfScope.map((o, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span className="text-rose-400/70">•</span>
+                <span style={{ color: "var(--accent-primary-hover)" }}>•</span>
                 <span>{o}</span>
               </li>
             ))}

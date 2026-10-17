@@ -195,7 +195,7 @@ export const ProposalWorkbench: React.FC = () => {
                 border: activeTab === "risks" ? "1px solid var(--border-subtle)" : "1px solid transparent",
               }}
             >
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+              <AlertTriangle className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-hover)" }} />
               <span>Technical Risks</span>
               <span
                 className="text-[10px] font-mono px-1.5 py-0.5 rounded"
@@ -217,7 +217,7 @@ export const ProposalWorkbench: React.FC = () => {
                 border: activeTab === "scope_guard" ? "1px solid var(--border-subtle)" : "1px solid transparent",
               }}
             >
-              <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
+              <ShieldAlert className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-hover)" }} />
               <span>Scope Guard</span>
               <span
                 className="text-[10px] font-mono px-1.5 py-0.5 rounded"
@@ -239,7 +239,7 @@ export const ProposalWorkbench: React.FC = () => {
                 border: activeTab === "client_email" ? "1px solid var(--border-subtle)" : "1px solid transparent",
               }}
             >
-              <Mail className="w-3.5 h-3.5 text-sky-400" />
+              <Mail className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
               <span>Client Email</span>
             </button>
           </div>

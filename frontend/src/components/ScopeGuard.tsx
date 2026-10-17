@@ -41,7 +41,7 @@ export const ScopeGuard: React.FC = () => {
       >
         <div className="space-y-1">
           <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-            <ShieldAlert className="w-4 h-4 text-amber-400" />
+            <ShieldAlert className="w-4 h-4" style={{ color: "var(--accent-primary-hover)" }} />
             <span>Scope-Creep Guardrails & SOW Protective Clauses</span>
           </h3>
           <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
@@ -100,7 +100,7 @@ export const ScopeGuard: React.FC = () => {
               {/* Quote extracted from brief */}
               <div className="space-y-1">
                 <span className="text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1" style={{ color: "var(--text-muted)" }}>
-                  <Quote className="w-3 h-3 text-amber-400" />
+                  <Quote className="w-3 h-3" style={{ color: "var(--accent-primary-hover)" }} />
                   <span>Ambiguous Phrase in Client Brief:</span>
                 </span>
                 <p

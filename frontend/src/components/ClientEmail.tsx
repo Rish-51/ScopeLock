@@ -49,7 +49,7 @@ export const ClientEmail: React.FC = () => {
       >
         <div className="space-y-1">
           <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
-            <Mail className="w-4 h-4 text-sky-400" />
+            <Mail className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
             <span>'Questions Before I Quote' Client Email Draft</span>
           </h3>
           <p className="text-xs" style={{ color: "var(--text-secondary)" }}>

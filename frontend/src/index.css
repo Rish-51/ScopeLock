@@ -1,46 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  /* Surface & Canvas (Dark Minimalist Default) */
-  --bg-canvas: #0c0d0f;
-  --bg-surface: #131519;
-  --bg-elevated: #1b1e24;
-  --bg-input: #090a0c;
+  /* Surface & Canvas (Warm Oat Minimalist) */
+  --bg-canvas: #f7f4eb;
+  --bg-surface: #ffffff;
+  --bg-elevated: #eae4d7;
+  --bg-input: #efece4;
 
   /* Borders & Dividers */
-  --border-subtle: #23272f;
-  --border-strong: #333842;
-  --border-focus: #e2e8f0;
+  --border-subtle: #ddd6c7;
+  --border-strong: #7a407e;
+  --border-focus: #f97316;
 
-  /* Typography */
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  /* Typography (Deep Plum Purple & Slate) */
+  --text-primary: #2d0c30;
+  --text-secondary: #65436a;
+  --text-muted: #8e7593;
 
-  /* Primary Action */
-  --accent-primary-bg: #f8fafc;
-  --accent-primary-fg: #090a0c;
-  --accent-primary-hover: #e2e8f0;
+  /* Primary Action (Vibrant Tangerine) */
+  --accent-primary-bg: #f97316;
+  --accent-primary-fg: #ffffff;
+  --accent-primary-hover: #ea580c;
 
   /* Secondary Action */
-  --accent-secondary-bg: #131519;
-  --accent-secondary-border: #334155;
-  --accent-secondary-fg: #cbd5e1;
-  --accent-secondary-hover: #1e2229;
+  --accent-secondary-bg: #ffffff;
+  --accent-secondary-border: #7a407e;
+  --accent-secondary-fg: #2d0c30;
+  --accent-secondary-hover: #f7f4eb;
 
-  /* Status & Verification: Zero Content Egress & Offline Safe */
-  --status-safe-bg: #0d281e;
-  --status-safe-border: #154734;
-  --status-safe-fg: #34d399;
+  /* Status & Verification: Zero Content Egress & Offline Safe (Soft Plum Tint) */
+  --status-safe-bg: #f3e8f4;
+  --status-safe-border: #dec6e2;
+  --status-safe-fg: #581c61;
 
   /* Active Segmented Controls */
-  --pill-active-bg: #e2e8f0;
-  --pill-active-fg: #0c0d0f;
+  --pill-active-bg: #f97316;
+  --pill-active-fg: #ffffff;
 
   /* Geometry & Shadows */
   --card-radius: 8px;
   --input-radius: 6px;
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.25);
+  --card-shadow: 0 1px 3px rgba(45, 12, 48, 0.06), 0 8px 24px rgba(45, 12, 48, 0.08);
 }
 
 @layer base {
@@ -73,7 +73,7 @@
 @media print {
   body {
     background: #ffffff !important;
-    color: #141413 !important;
+    color: #2d0c30 !important;
   }
   .no-print {
     display: none !important;

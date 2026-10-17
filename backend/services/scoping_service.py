@@ -52,11 +52,12 @@ RULES:
 SYSTEM_PROMPT_C = """You are ScopeLock Scoper, an expert engineering project manager.
 Break down the requirements into an ordered milestone plan with integer hour estimates.
 RULES:
-1. Provide 3 sequential milestones.
-2. Each milestone must specify objective, deliverables, linked requirement_ids, and an hour range (hours_min, hours_max).
-3. Hours MUST be realistic integers (e.g. 10 to 25).
-4. Do NOT compute prices, rates, totals, or percentages.
-5. Output MUST strictly match the JSON schema."""
+1. Provide exactly 3 sequential milestones (M1, M2, M3).
+2. Each milestone must specify id, title, objective, deliverables (list of 2-3 concise strings), linked requirement_ids, an hour range (hours_min, hours_max), and depends_on (list of milestone ids).
+3. Keep descriptions and deliverable lists concise (1-2 lines each) so all milestones fit completely without truncation.
+4. Hours MUST be realistic integers (e.g. 10 to 25).
+5. Do NOT compute prices, rates, totals, or percentages.
+6. Output MUST strictly match the JSON schema."""
 
 SYSTEM_PROMPT_D = """You are ScopeLock Scoper.
 Draft a professional, courteous 'questions before I quote' email for the freelancer to send to the client.
@@ -76,7 +77,7 @@ class ScopingService:
         response_model: Type[T],
         stage: str,
         max_retries: int = 2,
-        num_predict: int = 768,
+        num_predict: int = 1500,
     ) -> Tuple[T, Dict[str, Any]]:
         """
         Executes an LLM stage with a JSON/schema repair retry loop (up to max_retries).
@@ -84,6 +85,7 @@ class ScopingService:
         """
         current_messages = list(messages)
         last_error = None
+        current_num_predict = num_predict
         aggregated_metrics = {
             "input_tokens": 0,
             "output_tokens": 0,
@@ -113,7 +115,7 @@ class ScopingService:
                         response_model=response_model,
                         stage=stage,
                         attempt=attempt,
-                        num_predict=num_predict,
+                        num_predict=current_num_predict,
                     )
                     aggregated_metrics["input_tokens"] += metrics.get("input_tokens", 0)
                     aggregated_metrics["output_tokens"] += metrics.get("output_tokens", 0)
@@ -130,12 +132,14 @@ class ScopingService:
                     span.set_status("error", error_type="schema_validation")
                     last_error = err
                     aggregated_metrics["retries"] += 1
+                    # Adaptively scale up token prediction budget on retry
+                    current_num_predict = min(4096, int(current_num_predict * 1.5))
                     if attempt > max_retries:
                         break
                     # Feedback only validation error message per PLAN.md Section 4
                     repair_prompt = (
                         f"Your previous response failed schema validation with error: {str(err)}\n"
-                        f"Please correct the JSON output to strictly match the schema."
+                        f"Please provide the complete, un-truncated JSON output strictly matching all required schema fields."
                     )
                     current_messages.append({"role": "user", "content": repair_prompt})
 
@@ -176,7 +180,7 @@ class ScopingService:
                     messages=msgs,
                     response_model=RequirementsResult,
                     stage=stage_label,
-                    num_predict=1200,
+                    num_predict=1500,
                 )
                 requirements_results.append(res)
 
@@ -205,7 +209,7 @@ class ScopingService:
                 messages=msgs_b,
                 response_model=RiskResult,
                 stage="risks",
-                num_predict=1200,
+                num_predict=1500,
             )
 
             # Step C: Milestones & Scoping
@@ -227,7 +231,7 @@ class ScopingService:
                 messages=msgs_c,
                 response_model=MilestonePlan,
                 stage="milestones",
-                num_predict=800,
+                num_predict=2048,
             )
 
             # Deterministic Tool 1: verify_quotes
@@ -284,7 +288,7 @@ class ScopingService:
                 messages=msgs_d,
                 response_model=ClientEmail,
                 stage="client_email",
-                num_predict=400,
+                num_predict=800,
             )
 
             return ScopeLockProposal(

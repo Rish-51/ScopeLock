@@ -6,23 +6,23 @@ This guide provides a dedicated **Minimalist design system** for **ScopeLock (`v
 
 ## 1. Minimalist Color Tokens
 
-You can apply this as a **Dark Minimalist ("Monolith Slate")** to preserve ScopeLock's night aesthetic, or as **Light Minimalist ("Swiss Archival Ledger")** for an editorial paper feel.
+ScopeLock uses an **Editorial Warm Minimalist ("Oat, Tangerine & Plum Purple")** system:
 
-| UI Element / Surface | Dark Minimalist ("Monolith Slate") | Light Minimalist ("Swiss Ledger") | Purpose & Behavior |
-| :--- | :--- | :--- | :--- |
-| **Page Canvas (`--bg-canvas`)** | `#0C0D0F` (Matte Carbon) | `#F6F5F0` (Archival Stone) | Zero-glare, distraction-free backdrop |
-| **Workspace Card (`--bg-surface`)** | `#131519` (Graphite) | `#FFFFFF` (Pure Card) | Crisp elevated container |
-| **Markdown Editor Well (`--bg-input`)** | `#090A0C` (Deep Well) | `#EFECE6` (Recessed Vellum) | Distinguishes code/monospaced input |
-| **Elevated Pills / Chips (`--bg-elevated`)** | `#1B1E24` (Elevated Slate) | `#EAE6DF` (Pebble) | Synthetic brief chips & inactive tabs |
-| **Subtle Hairline Borders (`--border-subtle`)** | `#23272F` (Hairline Ash) | `#DCD8CE` (Hairline Stone) | Structural separation without visual noise |
-| **Focus / Active Border (`--border-focus`)** | `#E2E8F0` (Silver Slate) | `#141413` (Carbon Ink) | High-contrast accessibility indicator |
-| **Primary Text (`--text-primary`)** | `#F1F5F9` (Alabaster White) | `#141413` (Carbon Ink) | Headings, labels, and editor text |
-| **Secondary Text (`--text-secondary`)** | `#94A3B8` (Muted Steel) | `#575652` (Warm Pewter) | Subtitles, helper text, and placeholders |
-| **Muted Metadata (`--text-muted`)** | `#64748B` (Dim Slate) | `#85837D` (Stone Gray) | Char/token counts, version, footer links |
-| **Primary CTA (`Scope with Local Gemma`)** | `#F8FAFC` bg / `#090A0C` text | `#141413` bg / `#F6F5F0` text | High-contrast, confident action button |
-| **Secondary CTA (`Load Instant Demo Replay`)** | `#131519` bg / `#334155` border | `#FFFFFF` bg / `#C7C2B6` border | Understated ghost/secondary action |
-| **Verification Pill (`ZERO EGRESS`)** | `#0D281E` bg / `#34D399` text | `#E3EFE8` bg / `#1B5E3A` text | Reserved for privacy & telemetry assurance |
-| **Active Contingency (`20%` Pill)** | `#E2E8F0` bg / `#0C0D0F` text | `#141413` bg / `#F6F5F0` text | Segmented control active state |
+| UI Element / Surface | Warm Editorial ("Oat, Tangerine & Plum") | Purpose & Behavior |
+| :--- | :--- | :--- |
+| **Page Canvas (`--bg-canvas`)** | `#F7F4EB` (Warm Oat) | Soothing paper backdrop, zero glare |
+| **Workspace Card (`--bg-surface`)** | `#FFFFFF` (Pure Card White) | Crisp elevated container |
+| **Markdown Editor Well (`--bg-input`)** | `#EFECE4` (Recessed Soft Oat) | Code / monospaced input well |
+| **Elevated Pills / Chips (`--bg-elevated`)** | `#EAE4D7` (Pebble Oat) | Preset brief chips & inactive tabs |
+| **Subtle Hairline Borders (`--border-subtle`)** | `#DDD6C7` (Soft Oat Border) | Structural separation without noise |
+| **Focus / Active Border (`--border-focus`)** | `#F97316` (Tangerine Focus) | High-contrast accessibility indicator |
+| **Primary Text (`--text-primary`)** | `#2D0C30` (Deep Plum Purple) | Maximum contrast for headings, labels, and editor body |
+| **Secondary Text (`--text-secondary`)** | `#65436A` (Plum-tinted Slate) | Subtitles, helper text, and placeholders |
+| **Muted Metadata (`--text-muted`)** | `#8E7593` (Muted Plum Slate) | Char/token counts, version, footer links |
+| **Primary CTA (`Scope with Local Gemma`)** | `#F97316` bg / `#FFFFFF` text | High-contrast, vibrant Tangerine action button |
+| **Secondary CTA (`Load Instant Demo Replay`)** | `#FFFFFF` bg / `#7A407E` border | Understated Plum-bordered ghost action |
+| **Verification Pill (`ZERO EGRESS`)** | `#F3E8F4` bg / `#581C61` text | Plum-branded privacy & telemetry assurance |
+| **Active Contingency (`20%` Pill)** | `#F97316` bg / `#FFFFFF` text | Segmented control active state |
 
 ---
 

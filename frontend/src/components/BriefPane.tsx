@@ -118,22 +118,22 @@ export const BriefPane: React.FC = () => {
               backgroundColor:
                 grounding.ungrounded_ids.length === 0
                   ? "var(--status-safe-bg)"
-                  : "#2a1e12",
+                  : "#FFF7ED",
               border: `1px solid ${
                 grounding.ungrounded_ids.length === 0
                   ? "var(--status-safe-border)"
-                  : "#5c3d1d"
+                  : "#FED7AA"
               }`,
               color:
                 grounding.ungrounded_ids.length === 0
                   ? "var(--status-safe-fg)"
-                  : "#fcd34d",
+                  : "#EA580C",
             }}
           >
             {grounding.ungrounded_ids.length === 0 ? (
               <CheckCircle className="w-3 h-3" style={{ color: "var(--status-safe-fg)" }} />
             ) : (
-              <AlertTriangle className="w-3 h-3 text-amber-400" />
+              <AlertTriangle className="w-3 h-3" style={{ color: "var(--accent-primary-hover)" }} />
             )}
             <span>
               {grounding.grounded_quotes}/{grounding.total_quotes} Quotes Grounded ({groundedRatio}%)
