@@ -1,8 +1,52 @@
 @import "tailwindcss";
 
+:root {
+  /* Surface & Canvas (Dark Minimalist) */
+  --bg-canvas: #0c0d0f;
+  --bg-surface: #131519;
+  --bg-elevated: #1b1e24;
+  --bg-input: #090a0c;
+
+  /* Borders & Dividers */
+  --border-subtle: #23272f;
+  --border-strong: #333842;
+  --border-focus: #e2e8f0;
+
+  /* Typography */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Primary Action */
+  --accent-primary-bg: #f8fafc;
+  --accent-primary-fg: #090a0c;
+  --accent-primary-hover: #e2e8f0;
+
+  /* Secondary Action */
+  --accent-secondary-bg: #131519;
+  --accent-secondary-border: #334155;
+  --accent-secondary-fg: #cbd5e1;
+  --accent-secondary-hover: #1e2229;
+
+  /* Status & Verification */
+  --status-safe-bg: #0d281e;
+  --status-safe-border: #154734;
+  --status-safe-fg: #34d399;
+
+  /* Active Segmented Controls */
+  --pill-active-bg: #e2e8f0;
+  --pill-active-fg: #0c0d0f;
+
+  /* Geometry */
+  --card-radius: 8px;
+  --input-radius: 6px;
+}
+
 @layer base {
   body {
-    @apply bg-zinc-950 text-zinc-100 antialiased selection:bg-emerald-500/20 selection:text-emerald-400 min-h-screen font-sans;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    @apply antialiased min-h-screen font-sans;
   }
 }
 
