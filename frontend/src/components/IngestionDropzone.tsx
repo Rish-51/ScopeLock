@@ -168,36 +168,23 @@ export const IngestionDropzone: React.FC = () => {
     <div className="w-full max-w-4xl mx-auto space-y-6">
       {/* Hero Header */}
       <div className="text-center space-y-3 pt-6 pb-2">
-        <div
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium"
-          style={{
-            backgroundColor: 'var(--bg-elevated)',
-            border: '1px solid var(--border-subtle)',
-            color: 'var(--text-secondary)',
-          }}
-        >
-          <Sparkles className="w-3.5 h-3.5" style={{ color: 'var(--status-safe-fg)' }} />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+          <Sparkles className="w-3.5 h-3.5" />
           <span>Local-First • NDA-Safe • Verbatim Grounded</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
           Scope Freelance RFQs with Total Privacy
         </h1>
-        <p className="max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
           Read client briefs on your machine with local Gemma. Ground requirements in exact quotes,
           compute pricing in deterministic code, and spot scope-creep before you quote.
         </p>
       </div>
 
       {/* Preset Briefs Bar */}
-      <div
-        className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl"
-        style={{
-          backgroundColor: 'var(--bg-surface)',
-          border: '1px solid var(--border-subtle)',
-        }}
-      >
-        <span className="text-xs font-medium flex items-center gap-1.5 pl-1" style={{ color: 'var(--text-secondary)' }}>
-          <Layers className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+      <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-zinc-900/80 border border-zinc-800 rounded-xl">
+        <span className="text-xs font-medium text-zinc-400 flex items-center gap-1.5 pl-1">
+          <Layers className="w-3.5 h-3.5 text-zinc-500" />
           <span>Load Synthetic Brief:</span>
         </span>
         <div className="flex flex-wrap gap-2">
@@ -209,68 +196,45 @@ export const IngestionDropzone: React.FC = () => {
                 setActiveInputTab("paste");
                 setSelectedFile(null);
               }}
-              className="px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                border: '1px solid var(--border-subtle)',
-                color: 'var(--text-secondary)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--text-primary)';
-                e.currentTarget.style.borderColor = 'var(--border-strong)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--text-secondary)';
-                e.currentTarget.style.borderColor = 'var(--border-subtle)';
-              }}
+              className="px-2.5 py-1 text-xs rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-zinc-700/60 transition-colors cursor-pointer"
             >
-              {b.name} <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>({b.tag})</span>
+              {b.name} <span className="text-[10px] text-zinc-500">({b.tag})</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Input Tabs & Main Card */}
-      <div
-        className="rounded-2xl p-6 shadow-xl space-y-5"
-        style={{
-          backgroundColor: 'var(--bg-surface)',
-          border: '1px solid var(--border-subtle)',
-        }}
-      >
-        <div className="flex items-center justify-between pb-3" style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+      <div className="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-6 shadow-2xl backdrop-blur-sm space-y-5">
+        <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
           <div className="flex gap-2">
             <button
               onClick={() => setActiveInputTab("paste")}
-              className="px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer flex items-center gap-2"
-              style={{
-                backgroundColor: activeInputTab === "paste" ? 'var(--bg-elevated)' : 'transparent',
-                color: activeInputTab === "paste" ? 'var(--text-primary)' : 'var(--text-muted)',
-                border: activeInputTab === "paste" ? '1px solid var(--border-subtle)' : '1px solid transparent',
-                borderBottom: activeInputTab === "paste" ? '2px solid var(--border-focus)' : '1px solid transparent',
-              }}
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors cursor-pointer flex items-center gap-2 ${
+                activeInputTab === "paste"
+                  ? "bg-zinc-800 text-white border border-zinc-700"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
             >
               <FileCode className="w-3.5 h-3.5" />
               <span>Paste Text / Markdown</span>
             </button>
             <button
               onClick={() => setActiveInputTab("file")}
-              className="px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer flex items-center gap-2"
-              style={{
-                backgroundColor: activeInputTab === "file" ? 'var(--bg-elevated)' : 'transparent',
-                color: activeInputTab === "file" ? 'var(--text-primary)' : 'var(--text-muted)',
-                border: activeInputTab === "file" ? '1px solid var(--border-subtle)' : '1px solid transparent',
-                borderBottom: activeInputTab === "file" ? '2px solid var(--border-focus)' : '1px solid transparent',
-              }}
+              className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors cursor-pointer flex items-center gap-2 ${
+                activeInputTab === "file"
+                  ? "bg-zinc-800 text-white border border-zinc-700"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
             >
               <FileText className="w-3.5 h-3.5" />
               <span>Upload PDF / MD / TXT</span>
             </button>
           </div>
 
-          <div className="text-right text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+          <div className="text-right text-xs font-mono text-zinc-400">
             <span>{charCount.toLocaleString()} chars</span>
-            <span className="mx-1.5 opacity-40">•</span>
+            <span className="mx-1.5 text-zinc-600">•</span>
             <span>~{estimatedTokens.toLocaleString()} tokens</span>
           </div>
         </div>
@@ -283,18 +247,7 @@ export const IngestionDropzone: React.FC = () => {
               onChange={(e) => setPastedText(e.target.value)}
               placeholder="Paste your client RFQ, project brief, or email here..."
               rows={10}
-              className="w-full rounded-xl p-4 text-sm font-mono transition-all resize-y outline-none"
-              style={{
-                backgroundColor: 'var(--bg-input)',
-                border: '1px solid var(--border-subtle)',
-                color: 'var(--text-primary)',
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-focus)';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-subtle)';
-              }}
+              className="w-full bg-zinc-950/70 border border-zinc-800 rounded-xl p-4 text-sm font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all resize-y"
             />
           </div>
         ) : (
@@ -302,11 +255,7 @@ export const IngestionDropzone: React.FC = () => {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all"
-            style={{
-              backgroundColor: 'var(--bg-input)',
-              borderColor: 'var(--border-subtle)',
-            }}
+            className="border-2 border-dashed border-zinc-800 hover:border-zinc-700 rounded-xl p-10 text-center cursor-pointer bg-zinc-950/40 hover:bg-zinc-950/70 transition-all"
           >
             <input
               ref={fileInputRef}
@@ -315,46 +264,35 @@ export const IngestionDropzone: React.FC = () => {
               onChange={handleFileChange}
               className="hidden"
             />
-            <Upload className="w-10 h-10 mx-auto mb-3" style={{ color: 'var(--text-muted)' }} />
+            <Upload className="w-10 h-10 text-zinc-500 mx-auto mb-3" />
             {selectedFile ? (
               <div className="space-y-1">
-                <p className="text-sm font-medium" style={{ color: 'var(--status-safe-fg)' }}>{selectedFile.name}</p>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{(selectedFile.size / 1024).toFixed(1)} KB</p>
+                <p className="text-sm font-medium text-emerald-400">{selectedFile.name}</p>
+                <p className="text-xs text-zinc-500">{(selectedFile.size / 1024).toFixed(1)} KB</p>
               </div>
             ) : (
               <div className="space-y-1">
-                <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                <p className="text-sm font-medium text-zinc-300">
                   Drag and drop your RFP document, or click to browse
                 </p>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Supports .pdf, .md, .txt (max 10MB)</p>
+                <p className="text-xs text-zinc-500">Supports .pdf, .md, .txt (max 10MB)</p>
               </div>
             )}
           </div>
         )}
 
         {/* Commercial Configuration Parameters */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2" style={{ borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-zinc-800/80">
           <div>
-            <label className="block text-xs font-medium mb-1.5 flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
-              <DollarSign className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+            <label className="block text-xs font-medium text-zinc-400 mb-1.5 flex items-center gap-1">
+              <DollarSign className="w-3.5 h-3.5 text-zinc-500" />
               <span>Hourly Rate</span>
             </label>
-            <div
-              className="flex rounded-lg overflow-hidden"
-              style={{
-                backgroundColor: 'var(--bg-input)',
-                border: '1px solid var(--border-subtle)',
-              }}
-            >
+            <div className="flex rounded-lg bg-zinc-950 border border-zinc-800 focus-within:border-zinc-600">
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="text-xs px-3 py-2 border-r outline-none cursor-pointer"
-                style={{
-                  backgroundColor: 'transparent',
-                  color: 'var(--text-secondary)',
-                  borderColor: 'var(--border-subtle)',
-                }}
+                className="bg-transparent text-xs text-zinc-300 px-3 py-2 border-r border-zinc-800 focus:outline-none"
               >
                 <option value="USD">USD</option>
                 <option value="INR">INR</option>
@@ -365,35 +303,27 @@ export const IngestionDropzone: React.FC = () => {
                 type="number"
                 value={hourlyRate}
                 onChange={(e) => setHourlyRate(Number(e.target.value) || 0)}
-                className="w-full bg-transparent px-3 py-2 text-xs font-mono outline-none"
-                style={{ color: 'var(--text-primary)' }}
+                className="w-full bg-transparent px-3 py-2 text-xs font-mono text-white focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium mb-1.5 flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
-              <Percent className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+            <label className="block text-xs font-medium text-zinc-400 mb-1.5 flex items-center gap-1">
+              <Percent className="w-3.5 h-3.5 text-zinc-500" />
               <span>Contingency Buffer</span>
             </label>
-            <div
-              className="grid grid-cols-3 gap-1 p-1 rounded-lg"
-              style={{
-                backgroundColor: 'var(--bg-input)',
-                border: '1px solid var(--border-subtle)',
-              }}
-            >
+            <div className="grid grid-cols-3 gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
               {[15, 20, 25].map((pct) => (
                 <button
                   key={pct}
                   type="button"
                   onClick={() => setContingencyPercent(pct)}
-                  className="py-1 text-xs rounded transition-colors cursor-pointer"
-                  style={{
-                    backgroundColor: contingencyPercent === pct ? 'var(--pill-active-bg)' : 'transparent',
-                    color: contingencyPercent === pct ? 'var(--pill-active-fg)' : 'var(--text-secondary)',
-                    fontWeight: contingencyPercent === pct ? 600 : 400,
-                  }}
+                  className={`py-1 text-xs rounded font-medium transition-colors cursor-pointer ${
+                    contingencyPercent === pct
+                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                      : "text-zinc-400 hover:text-zinc-200"
+                  }`}
                 >
                   {pct}%
                 </button>
@@ -403,27 +333,15 @@ export const IngestionDropzone: React.FC = () => {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>Target Architecture</label>
-              <span
-                className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
-                style={{
-                  backgroundColor: 'var(--status-safe-bg)',
-                  border: '1px solid var(--status-safe-border)',
-                  color: 'var(--status-safe-fg)',
-                }}
-              >
+              <label className="text-xs font-medium text-zinc-400">Target Architecture</label>
+              <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-500/20 px-1.5 py-0.5 rounded">
                 OFFLINE SAFE
               </span>
             </div>
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="w-full rounded-lg px-3 py-2 text-xs font-mono outline-none cursor-pointer"
-              style={{
-                backgroundColor: 'var(--bg-input)',
-                border: '1px solid var(--border-subtle)',
-                color: 'var(--text-primary)',
-              }}
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-emerald-500/50 cursor-pointer"
             >
               <option value="gemma4:e2b">Gemma 4 2B (Fast / CPU Recommended)</option>
               <option value="gemma4:e4b">Gemma 4 4B (Deep / GPU)</option>
@@ -444,14 +362,9 @@ export const IngestionDropzone: React.FC = () => {
             <button
               type="button"
               onClick={handleLoadDemo}
-              className="shrink-0 px-3 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer self-end sm:self-center"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                borderColor: 'var(--border-subtle)',
-                color: 'var(--text-primary)',
-              }}
+              className="shrink-0 px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer self-end sm:self-center"
             >
-              <Zap className="w-3.5 h-3.5" style={{ color: 'var(--status-safe-fg)' }} />
+              <Zap className="w-3.5 h-3.5 text-emerald-400" />
               <span>Load Instant Demo</span>
             </button>
           </div>
@@ -465,20 +378,9 @@ export const IngestionDropzone: React.FC = () => {
               type="button"
               onClick={handleLoadDemo}
               disabled={isAnalyzing}
-              className="py-3 px-4 rounded-xl font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                backgroundColor: 'var(--accent-secondary-bg)',
-                border: '1px solid var(--accent-secondary-border)',
-                color: 'var(--accent-secondary-fg)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--accent-secondary-hover)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--accent-secondary-bg)';
-              }}
+              className="py-3 px-4 rounded-xl bg-zinc-800/90 hover:bg-zinc-800 border border-emerald-500/40 hover:border-emerald-500/70 text-emerald-300 hover:text-emerald-200 font-semibold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Zap className="w-4 h-4 shrink-0" style={{ color: 'var(--status-safe-fg)' }} />
+              <Zap className="w-4 h-4 text-emerald-400 shrink-0 fill-emerald-400/20" />
               <span>⚡ Load Instant Demo Replay (0s)</span>
             </button>
 
@@ -487,19 +389,7 @@ export const IngestionDropzone: React.FC = () => {
               type="button"
               onClick={handleAnalyze}
               disabled={isAnalyzing}
-              className="py-3 px-6 text-xs tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-              style={{
-                backgroundColor: 'var(--accent-primary-bg)',
-                color: 'var(--accent-primary-fg)',
-                borderRadius: 'var(--input-radius)',
-                fontWeight: 600,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--accent-primary-hover)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--accent-primary-bg)';
-              }}
+              className="py-3 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:bg-zinc-800 text-zinc-950 disabled:text-zinc-500 font-bold text-xs tracking-wide transition-all shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
             >
               {isAnalyzing ? (
                 <>
@@ -517,35 +407,27 @@ export const IngestionDropzone: React.FC = () => {
 
           {/* Active CPU Progress Indicator */}
           {isAnalyzing && (
-            <div
-              className="p-4 rounded-xl space-y-2.5 text-xs animate-in fade-in duration-300"
-              style={{
-                backgroundColor: 'var(--bg-elevated)',
-                border: '1px solid var(--border-subtle)',
-                color: 'var(--text-secondary)',
-              }}
-            >
+            <div className="p-4 rounded-xl bg-zinc-950/90 border border-zinc-800/80 space-y-2.5 text-xs text-zinc-300 animate-in fade-in duration-300">
               <div className="flex items-center justify-between">
-                <span className="font-semibold flex items-center gap-2" style={{ color: 'var(--status-safe-fg)' }}>
-                  <span className="inline-block animate-spin rounded-full h-3 w-3 border-2 border-t-transparent" style={{ borderColor: 'var(--status-safe-fg)' }} />
+                <span className="font-semibold text-emerald-400 flex items-center gap-2">
+                  <span className="inline-block animate-spin rounded-full h-3 w-3 border-2 border-emerald-400 border-t-transparent" />
                   Local 5-Step Scoping Pipeline in Progress
                 </span>
-                <span className="font-mono text-xs flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-                  <Clock className="w-3.5 h-3.5" />
+                <span className="font-mono text-xs text-zinc-400 flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-zinc-500" />
                   {elapsedSeconds}s elapsed
                 </span>
               </div>
-              <p className="leading-relaxed text-[11px]" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-zinc-400 leading-relaxed text-[11px]">
                 Ollama is executing schema-constrained inference on your local CPU. Zero client data leaves your laptop.
                 Because CPUs generate tokens sequentially at ~3–5 tokens/sec, this takes 1–3 minutes per step.
               </p>
-              <div className="pt-1.5 flex items-center justify-between" style={{ borderTop: '1px solid var(--border-subtle)' }}>
-                <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Want to test the full workbench immediately?</span>
+              <div className="pt-1.5 flex items-center justify-between border-t border-zinc-800/60">
+                <span className="text-[11px] text-zinc-500">Want to test the full workbench immediately?</span>
                 <button
                   type="button"
                   onClick={handleLoadDemo}
-                  className="text-[11px] font-semibold underline cursor-pointer"
-                  style={{ color: 'var(--status-safe-fg)' }}
+                  className="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold underline cursor-pointer"
                 >
                   ⚡ Switch to Instant Demo Trace →
                 </button>
