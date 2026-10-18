@@ -1,5 +1,5 @@
 import React from "react";
-import { Lock, ShieldCheck, Sparkles, Code2 } from "lucide-react";
+import { Lock, ShieldCheck, Sparkles, Code2, ArrowLeft } from "lucide-react";
 import { useProposalStore } from "./store/proposalStore";
 import { PrivacyBeacon } from "./components/PrivacyBeacon";
 import { IngestionDropzone } from "./components/IngestionDropzone";
@@ -8,7 +8,7 @@ import { TraceInspectorModal } from "./components/TraceInspectorModal";
 import { ExportModal } from "./components/ExportModal";
 
 export const App: React.FC = () => {
-  const { proposal } = useProposalStore();
+  const { proposal, resetWorkbench } = useProposalStore();
   const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
   return (
@@ -43,43 +43,66 @@ export const App: React.FC = () => {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          {/* Logo */}
+          {/* Logo & Navigation */}
           <div className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-[3px] flex items-center justify-center shadow-[2px_2px_0px_#2d0c30]"
-              style={{
-                backgroundColor: "var(--bg-elevated)",
-                border: "2px solid var(--border-hard)",
-              }}
+            <button
+              onClick={resetWorkbench}
+              className="flex items-center gap-3 text-left cursor-pointer group transition-transform"
+              title="ScopeLock Home (Return to Upload)"
             >
-              <Lock className="w-5 h-5" style={{ color: "var(--status-safe-fg)" }} />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span
-                  className="font-extrabold text-base tracking-tight font-sans"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  ScopeLock
-                </span>
-                <span
-                  className="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-bold shadow-[1px_1px_0px_#2d0c30]"
-                  style={{
-                    backgroundColor: "var(--bg-elevated)",
-                    color: "var(--text-primary)",
-                    border: "1px solid var(--border-hard)",
-                  }}
-                >
-                  v0.1.0
-                </span>
-              </div>
-              <p
-                className="text-[10px] font-mono uppercase tracking-wider hidden sm:block font-semibold"
-                style={{ color: "var(--text-secondary)" }}
+              <div
+                className="w-9 h-9 rounded-[3px] flex items-center justify-center shadow-[2px_2px_0px_#2d0c30] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[3px_3px_0px_#2d0c30] transition-all"
+                style={{
+                  backgroundColor: "var(--bg-elevated)",
+                  border: "2px solid var(--border-hard)",
+                }}
               >
-                NDA-Safe RFQ & Proposal Scoper
-              </p>
-            </div>
+                <Lock className="w-5 h-5" style={{ color: "var(--status-safe-fg)" }} />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="font-extrabold text-base tracking-tight font-sans group-hover:text-[#ea580c] transition-colors"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    ScopeLock
+                  </span>
+                  <span
+                    className="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-bold shadow-[1px_1px_0px_#2d0c30]"
+                    style={{
+                      backgroundColor: "var(--bg-elevated)",
+                      color: "var(--text-primary)",
+                      border: "1px solid var(--border-hard)",
+                    }}
+                  >
+                    v0.1.0
+                  </span>
+                </div>
+                <p
+                  className="text-[10px] font-mono uppercase tracking-wider hidden sm:block font-semibold"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  NDA-Safe RFQ & Proposal Scoper
+                </p>
+              </div>
+            </button>
+
+            {/* Back button in header when proposal is open */}
+            {proposal && (
+              <button
+                onClick={resetWorkbench}
+                className="ml-2 px-3 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                style={{
+                  backgroundColor: "var(--accent-primary-bg)",
+                  color: "var(--accent-primary-fg)",
+                  border: "2px solid var(--border-hard)",
+                }}
+                title="Return to upload / new brief"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>BACK TO UPLOAD</span>
+              </button>
+            )}
           </div>
 
           {/* Privacy Beacon & Status */}

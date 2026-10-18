@@ -44,15 +44,16 @@ export const ProposalWorkbench: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={resetWorkbench}
-              className="px-2.5 py-1 rounded-[2px] text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+              className="px-3 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
-                backgroundColor: "var(--bg-elevated)",
-                border: "1.5px solid var(--border-hard)",
-                color: "var(--text-primary)",
+                backgroundColor: "var(--accent-primary-bg)",
+                border: "2px solid var(--border-hard)",
+                color: "var(--accent-primary-fg)",
               }}
+              title="Return to Ingestion Dropzone (Upload or paste new brief)"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>NEW BRIEF</span>
+              <ArrowLeft className="w-4 h-4" />
+              <span>BACK TO UPLOAD</span>
             </button>
             <span style={{ color: "var(--text-muted)" }}>/</span>
             <span
