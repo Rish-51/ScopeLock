@@ -13,7 +13,7 @@ export const PrivacyBeacon: React.FC = () => {
           const data = await res.json();
           setHealth(data);
         }
-      } catch (err) {
+      } catch {
         // Fallback offline health state
         setHealth({
           status: "ok",
