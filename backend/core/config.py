@@ -22,10 +22,12 @@ class Settings(BaseModel):
 
     # Sentry Telemetry (Metadata-only; empty means telemetry disabled)
     sentry_dsn: str = os.getenv("SENTRY_DSN", "").strip()
+    telemetry_enabled: bool = os.getenv("TELEMETRY_ENABLED", "true").lower() == "true"
 
     # Server configuration
     host: str = os.getenv("HOST", "0.0.0.0")
     port: int = int(os.getenv("PORT", "8000"))
+    max_file_size_mb: int = int(os.getenv("MAX_FILE_SIZE_MB", "5"))
 
     # Config files
     multipliers_path: Path = BASE_DIR / "backend" / "config" / "multipliers.yaml"

@@ -14,6 +14,7 @@ from contextvars import ContextVar
 from contextlib import contextmanager
 from typing import Any, Dict, List, Optional
 import sentry_sdk
+from backend.core.config import settings
 
 # In-memory trace collection context variable
 _active_traces: ContextVar[Optional[List[Dict[str, Any]]]] = ContextVar("active_traces", default=None)
@@ -71,9 +72,9 @@ def scrub_transaction(event: Dict[str, Any], hint: Dict[str, Any]) -> Optional[D
 def init_sentry(dsn: Optional[str] = None):
     """
     Initialize Sentry with strict metadata-only privacy settings.
-    If dsn is empty/None, Sentry is a no-op (fully offline).
+    If dsn is empty/None or telemetry_enabled is False, Sentry is a no-op.
     """
-    if not dsn:
+    if not dsn or not settings.telemetry_enabled:
         return
 
     sentry_sdk.init(
@@ -168,18 +169,22 @@ def traced(op: str, name: str, attributes: Optional[Dict[str, Any]] = None):
     # Start Sentry span
     sentry_span = None
     try:
-        current_scope = sentry_sdk.get_current_scope()
-        # In Sentry, child spans must be attached to an active transaction.
-        # If no transaction is active (e.g. standalone/CLI/test), start one for invoke_agent.
-        if op == "gen_ai.invoke_agent" and not getattr(current_scope, "transaction", None):
-            sentry_span = sentry_sdk.start_transaction(name=name, op=op)
+        if not settings.telemetry_enabled:
+            sentry_span = None
         else:
-            sentry_span = sentry_sdk.start_span(op=op, name=name)
+            current_scope = sentry_sdk.get_current_scope()
+            # In Sentry, child spans must be attached to an active transaction.
+            # If no transaction is active (e.g. standalone/CLI/test), start one for invoke_agent.
+            if op == "gen_ai.invoke_agent" and not getattr(current_scope, "transaction", None):
+                sentry_span = sentry_sdk.start_transaction(name=name, op=op)
+            else:
+                sentry_span = sentry_sdk.start_span(op=op, name=name)
 
-        sentry_span.__enter__()
-        for k, v in attrs.items():
-            if k in WHITELISTED_TRACE_ATTRS:
-                sentry_span.set_data(k, v)
+        sentry_span.__enter__() if sentry_span else None
+        if sentry_span:
+            for k, v in attrs.items():
+                if k in WHITELISTED_TRACE_ATTRS:
+                    sentry_span.set_data(k, v)
     except Exception:
         sentry_span = None
 

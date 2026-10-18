@@ -18,6 +18,7 @@ from backend.core.parser import parse_document
 from backend.core.pricing import load_multipliers, DEFAULT_SCHEDULE
 from backend.core.ollama_client import OllamaClient
 from backend.services.scoping_service import ScopingService
+from backend.services.storage_service import storage_service
 from backend.schemas.proposal import ScopeLockProposal
 
 # Initialize Sentry (metadata only, no-op if DSN empty)
@@ -32,7 +33,10 @@ app = FastAPI(
 # CORS middleware for local frontend development and production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -85,6 +89,51 @@ class AnalysisResponse(BaseModel):
     is_chunked: bool
 
 
+class StorageRequest(BaseModel):
+    proposal_id: str
+    password: str
+    data: Optional[Dict[str, Any]] = None
+
+
+@app.post("/api/v1/storage/unlock")
+async def unlock_storage(req: StorageRequest):
+    """Sets the master password for the current session to enable decryption."""
+    storage_service.set_master_password(req.password)
+    return {"status": "unlocked"}
+
+
+@app.post("/api/v1/storage/save")
+async def save_proposal(req: StorageRequest):
+    """Encrypts and saves a proposal to local disk."""
+    try:
+        storage_service.save_proposal(req.proposal_id, req.data)
+        return {"status": "saved"}
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+
+@app.post("/api/v1/storage/load")
+async def load_proposal(req: StorageRequest):
+    """Loads and decrypts a proposal from local disk."""
+    try:
+        data = storage_service.load_proposal(req.proposal_id)
+        if not data:
+            raise HTTPException(status_code=404, detail="Proposal not found or decryption failed.")
+        return {"data": data}
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+
+@app.post("/api/v1/storage/delete")
+async def delete_proposal(req: StorageRequest):
+    """Deletes a proposal from local disk."""
+    try:
+        storage_service.delete_proposal(req.proposal_id)
+        return {"status": "deleted"}
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+
 @app.post("/api/v1/scope/analyze", response_model=AnalysisResponse)
 async def analyze_scope(
     file: Optional[UploadFile] = File(None),
@@ -100,6 +149,14 @@ async def analyze_scope(
     Returns the structured proposal and local trace spans for UI inspection.
     """
     if file:
+        # Enforce maximum file size limit (e.g., 5MB)
+        content_length = file.size if hasattr(file, "size") else None
+        if content_length and content_length > settings.max_file_size_mb * 1024 * 1024:
+            raise HTTPException(
+                status_code=413,
+                detail=f"File too large. Maximum allowed size is {settings.max_file_size_mb}MB."
+            )
+
         file_bytes = await file.read()
         filename = file.filename or "uploaded_brief.txt"
     elif brief_text:
