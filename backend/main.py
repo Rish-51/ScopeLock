@@ -20,6 +20,7 @@ from backend.core.ollama_client import OllamaClient
 from backend.services.scoping_service import ScopingService
 from backend.services.storage_service import storage_service
 from backend.schemas.proposal import ScopeLockProposal
+from backend.pipeline import ScopingPipeline, BriefInput, PipelineOptions
 
 # Initialize Sentry (metadata only, no-op if DSN empty)
 init_sentry(settings.sentry_dsn)

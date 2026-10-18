@@ -11,9 +11,7 @@ import argparse
 import asyncio
 from pathlib import Path
 
-from backend.core.parser import parse_document
-from backend.services.scoping_service import ScopingService
-from backend.core.ollama_client import OllamaClient
+from backend.pipeline import ScopingPipeline, BriefInput, PipelineOptions
 from backend.core.tracing import trace_session
 
 
@@ -112,19 +110,18 @@ async def main():
         sys.exit(1)
 
     file_bytes = brief_path.read_bytes()
-    doc = parse_document(file_bytes, brief_path.name)
-    print(f"Loaded '{brief_path.name}' ({doc.char_count} chars, ~{doc.estimated_tokens} tokens)")
+    pipeline = ScopingPipeline.create(model=args.model)
 
-    ollama_client = OllamaClient(default_model=args.model)
-    service = ScopingService(ollama_client=ollama_client)
-
+    print(f"Loaded '{brief_path.name}' ({len(file_bytes)} bytes)")
     print("Analyzing brief locally with ScopeLock Scoper agent...")
     with trace_session():
-        proposal = await service.analyze_document(
-            doc=doc,
-            hourly_rate=args.rate,
-            currency=args.currency,
-            contingency_percent=args.contingency,
+        proposal = await pipeline.scope(
+            input=BriefInput(file_bytes=file_bytes, filename=brief_path.name),
+            options=PipelineOptions(
+                hourly_rate=args.rate,
+                currency=args.currency,
+                contingency_percent=args.contingency,
+            ),
         )
 
     output_str = format_cli_output(proposal)
