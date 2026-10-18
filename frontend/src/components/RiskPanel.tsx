@@ -34,13 +34,13 @@ export const RiskPanel: React.FC = () => {
   const getSeverityBadge = (severity: Severity) => {
     switch (severity) {
       case "CRITICAL":
-        return "bg-[#FFF0EB] text-[#C2410C] border-[#FDBA74]";
+        return "bg-[#FFF0EB] text-[#C2410C] border-2 border-[#2d0c30] shadow-[1px_1px_0px_#2d0c30]";
       case "HIGH":
-        return "bg-[#FFF7ED] text-[#EA580C] border-[#FED7AA]";
+        return "bg-[#FFF7ED] text-[#EA580C] border-2 border-[#2d0c30] shadow-[1px_1px_0px_#2d0c30]";
       case "MEDIUM":
-        return "bg-[#FDF4FF] text-[#7A407E] border-[#E9D5FF]";
+        return "bg-[#FDF4FF] text-[#7A407E] border-2 border-[#2d0c30] shadow-[1px_1px_0px_#2d0c30]";
       case "LOW":
-        return "bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]";
+        return "bg-[var(--bg-elevated)] text-[var(--text-primary)] border-2 border-[#2d0c30] shadow-[1px_1px_0px_#2d0c30]";
     }
   };
 
@@ -48,24 +48,24 @@ export const RiskPanel: React.FC = () => {
     <div className="space-y-6">
       {/* Filter Bar */}
       <div
-        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl text-xs"
+        className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-[2px] text-xs shadow-[2px_2px_0px_#2d0c30]"
         style={{
           backgroundColor: "var(--bg-input)",
-          border: "1px solid var(--border-subtle)",
+          border: "2px solid var(--border-hard)",
         }}
       >
-        <span className="font-medium" style={{ color: "var(--text-secondary)" }}>Filter Severity:</span>
+        <span className="font-mono font-bold uppercase tracking-wider text-[11px]" style={{ color: "var(--text-primary)" }}>Filter Severity:</span>
         <div className="flex gap-1.5">
           {(["ALL", "CRITICAL", "HIGH", "MEDIUM", "LOW"] as const).map((lvl) => (
             <button
               key={lvl}
               onClick={() => setSeverityFilter(lvl)}
-              className="px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors cursor-pointer border"
+              className="px-2.5 py-1 rounded-[2px] text-xs font-mono font-bold transition-all cursor-pointer border-1.5"
               style={{
-                backgroundColor: severityFilter === lvl ? "var(--pill-active-bg)" : "transparent",
-                color: severityFilter === lvl ? "var(--pill-active-fg)" : "var(--text-secondary)",
-                borderColor: severityFilter === lvl ? "var(--border-focus)" : "transparent",
-                fontWeight: severityFilter === lvl ? 600 : 400,
+                backgroundColor: severityFilter === lvl ? "var(--pill-active-bg)" : "var(--bg-surface)",
+                color: severityFilter === lvl ? "var(--pill-active-fg)" : "var(--text-primary)",
+                borderColor: "var(--border-hard)",
+                boxShadow: severityFilter === lvl ? "2px 2px 0px #2d0c30" : "1px 1px 0px #2d0c30",
               }}
             >
               {lvl}
@@ -78,10 +78,10 @@ export const RiskPanel: React.FC = () => {
       <div className="space-y-4">
         {filteredRisks.length === 0 ? (
           <div
-            className="p-8 text-center text-sm rounded-xl"
+            className="p-8 text-center text-sm rounded-[2px] font-mono border-2 border-dashed shadow-[2px_2px_0px_#2d0c30]"
             style={{
               backgroundColor: "var(--bg-input)",
-              border: "1px solid var(--border-subtle)",
+              borderColor: "var(--border-hard)",
               color: "var(--text-muted)",
             }}
           >
@@ -91,10 +91,10 @@ export const RiskPanel: React.FC = () => {
           filteredRisks.map((risk, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-xl space-y-3"
+              className="p-4 rounded-[2px] space-y-3 shadow-[3px_3px_0px_#2d0c30]"
               style={{
-                backgroundColor: "var(--bg-input)",
-                border: "1px solid var(--border-subtle)",
+                backgroundColor: "var(--bg-surface)",
+                border: "2px solid var(--border-hard)",
               }}
             >
               {/* Header */}
@@ -102,24 +102,24 @@ export const RiskPanel: React.FC = () => {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span
-                      className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${getSeverityBadge(
+                      className={`px-2 py-0.5 rounded-[2px] text-[10px] font-mono font-extrabold uppercase tracking-wider ${getSeverityBadge(
                         risk.severity
                       )}`}
                     >
                       {risk.severity}
                     </span>
                     <span
-                      className="text-xs font-mono px-2 py-0.5 rounded"
+                      className="text-xs font-mono font-bold px-2 py-0.5 rounded-[2px] shadow-[1px_1px_0px_#2d0c30]"
                       style={{
-                        backgroundColor: "var(--bg-surface)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-secondary)",
+                        backgroundColor: "var(--bg-elevated)",
+                        border: "1.5px solid var(--border-hard)",
+                        color: "var(--text-primary)",
                       }}
                     >
                       {risk.category}
                     </span>
                   </div>
-                  <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{risk.title}</h4>
+                  <h4 className="text-sm font-bold font-sans" style={{ color: "var(--text-primary)" }}>{risk.title}</h4>
                 </div>
               </div>
 
@@ -127,13 +127,13 @@ export const RiskPanel: React.FC = () => {
               <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{risk.description}</p>
 
               <div
-                className="p-3 rounded-lg space-y-1"
+                className="p-3 rounded-[2px] space-y-1 shadow-[2px_2px_0px_#2d0c30]"
                 style={{
-                  backgroundColor: "var(--bg-surface)",
-                  border: "1px solid var(--border-subtle)",
+                  backgroundColor: "var(--bg-input)",
+                  border: "2px solid var(--border-hard)",
                 }}
               >
-                <span className="text-[11px] font-semibold flex items-center gap-1.5" style={{ color: "var(--status-safe-fg)" }}>
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--status-safe-fg)" }}>
                   <ShieldCheck className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
                   <span>Mitigation Strategy:</span>
                 </span>
@@ -143,15 +143,15 @@ export const RiskPanel: React.FC = () => {
               {/* Client Question */}
               {risk.client_question && (
                 <div
-                  className="p-3 rounded-lg flex items-center justify-between gap-3"
+                  className="p-3 rounded-[2px] flex items-center justify-between gap-3 shadow-[2px_2px_0px_#2d0c30]"
                   style={{
                     backgroundColor: "var(--bg-elevated)",
-                    border: "1px solid var(--border-subtle)",
+                    border: "2px solid var(--border-hard)",
                   }}
                 >
                   <div className="space-y-0.5">
-                    <span className="text-[11px] font-semibold flex items-center gap-1" style={{ color: "var(--text-secondary)" }}>
-                      <HelpCircle className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider flex items-center gap-1" style={{ color: "var(--text-primary)" }}>
+                      <HelpCircle className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
                       <span>Clarification for Client:</span>
                     </span>
                     <p className="text-xs italic" style={{ color: "var(--text-primary)" }}>
@@ -160,11 +160,11 @@ export const RiskPanel: React.FC = () => {
                   </div>
                   <button
                     onClick={() => handleCopyQuestion(risk.client_question, idx)}
-                    className="p-1.5 rounded-lg cursor-pointer transition-colors shrink-0"
+                    className="p-1.5 rounded-[2px] cursor-pointer transition-all shrink-0 shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
                     style={{
                       backgroundColor: "var(--bg-surface)",
-                      border: "1px solid var(--border-subtle)",
-                      color: "var(--text-secondary)",
+                      border: "1.5px solid var(--border-hard)",
+                      color: "var(--text-primary)",
                     }}
                     title="Copy question"
                   >
@@ -185,20 +185,20 @@ export const RiskPanel: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
         {/* Assumptions */}
         <div
-          className="p-4 rounded-xl space-y-2"
+          className="p-4 rounded-[2px] space-y-2 shadow-[3px_3px_0px_#2d0c30]"
           style={{
-            backgroundColor: "var(--bg-input)",
-            border: "1px solid var(--border-subtle)",
+            backgroundColor: "var(--bg-surface)",
+            border: "2px solid var(--border-hard)",
           }}
         >
-          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--text-secondary)" }}>
-            <ClipboardList className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
+          <h4 className="text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--text-primary)" }}>
+            <ClipboardList className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
             <span>Assumptions ({assumptions.length})</span>
           </h4>
-          <ul className="space-y-1.5 text-xs" style={{ color: "var(--text-secondary)" }}>
+          <ul className="space-y-1.5 text-xs font-mono" style={{ color: "var(--text-secondary)" }}>
             {assumptions.map((a, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span style={{ color: "var(--text-muted)" }}>•</span>
+                <span className="font-bold" style={{ color: "var(--accent-primary-bg)" }}>•</span>
                 <span>{a}</span>
               </li>
             ))}
@@ -207,20 +207,20 @@ export const RiskPanel: React.FC = () => {
 
         {/* Out-of-Scope */}
         <div
-          className="p-4 rounded-xl space-y-2"
+          className="p-4 rounded-[2px] space-y-2 shadow-[3px_3px_0px_#2d0c30]"
           style={{
-            backgroundColor: "var(--bg-input)",
-            border: "1px solid var(--border-subtle)",
+            backgroundColor: "var(--bg-surface)",
+            border: "2px solid var(--border-hard)",
           }}
         >
-          <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--accent-primary-hover)" }}>
+          <h4 className="text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: "var(--accent-primary-hover)" }}>
             <Ban className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-hover)" }} />
             <span>Explicitly Out-of-Scope ({outOfScope.length})</span>
           </h4>
-          <ul className="space-y-1.5 text-xs" style={{ color: "var(--text-secondary)" }}>
+          <ul className="space-y-1.5 text-xs font-mono" style={{ color: "var(--text-secondary)" }}>
             {outOfScope.map((o, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span style={{ color: "var(--accent-primary-hover)" }}>•</span>
+                <span className="font-bold" style={{ color: "var(--accent-primary-hover)" }}>•</span>
                 <span>{o}</span>
               </li>
             ))}

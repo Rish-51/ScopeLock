@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Tight, architectural Warm Brutalism radii */
+  --radius-xs: 2px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+  --radius-3xl: 4px;
+  --radius-full: 9999px;
+
+  /* Crisp solid offset shadows */
+  --shadow-sm: 2px 2px 0px #2d0c30;
+  --shadow-md: 3px 3px 0px #2d0c30;
+  --shadow-lg: 4px 4px 0px #2d0c30;
+  --shadow-xl: 4px 4px 0px #2d0c30;
+  --shadow-2xl: 6px 6px 0px #2d0c30;
+}
+
 :root {
   /* Surface & Canvas (Warm Oat Minimalist) */
   --bg-canvas: #f7f4eb;
@@ -8,14 +30,15 @@
   --bg-input: #efece4;
 
   /* Borders & Dividers */
-  --border-subtle: #ddd6c7;
-  --border-strong: #7a407e;
+  --border-subtle: #d3c9b7;
+  --border-strong: #2d0c30;
+  --border-hard: #2d0c30;
   --border-focus: #f97316;
 
-  /* Typography (Deep Plum Purple & Slate) */
+  /* Typography (Deep Ink Plum & Muted Purples) */
   --text-primary: #2d0c30;
-  --text-secondary: #65436a;
-  --text-muted: #8e7593;
+  --text-secondary: #583e5c;
+  --text-muted: #876d8b;
 
   /* Primary Action (Vibrant Tangerine) */
   --accent-primary-bg: #f97316;
@@ -24,49 +47,121 @@
 
   /* Secondary Action */
   --accent-secondary-bg: #ffffff;
-  --accent-secondary-border: #7a407e;
+  --accent-secondary-border: #2d0c30;
   --accent-secondary-fg: #2d0c30;
-  --accent-secondary-hover: #f7f4eb;
+  --accent-secondary-hover: #eae4d7;
 
-  /* Status & Verification: Zero Content Egress & Offline Safe (Soft Plum Tint) */
+  /* Status & Verification: Zero Content Egress & Offline Safe */
   --status-safe-bg: #f3e8f4;
-  --status-safe-border: #dec6e2;
-  --status-safe-fg: #581c61;
+  --status-safe-border: #2d0c30;
+  --status-safe-fg: #45124c;
 
   /* Active Segmented Controls */
   --pill-active-bg: #f97316;
   --pill-active-fg: #ffffff;
 
   /* Geometry & Shadows */
-  --card-radius: 8px;
-  --input-radius: 6px;
-  --card-shadow: 0 1px 3px rgba(45, 12, 48, 0.06), 0 8px 24px rgba(45, 12, 48, 0.08);
+  --card-radius: 3px;
+  --input-radius: 2px;
+  --card-shadow: 4px 4px 0px #2d0c30;
+  --card-shadow-sm: 2px 2px 0px #2d0c30;
 }
 
 @layer base {
   body {
     background-color: var(--bg-canvas);
     color: var(--text-primary);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
   }
+
+  code, pre, kbd {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Warm Brutalism Component Classes */
+.brutalist-card {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-hard);
+  box-shadow: 4px 4px 0px var(--border-hard);
+  border-radius: var(--card-radius);
+}
+
+.brutalist-card-sm {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--border-hard);
+  box-shadow: 2px 2px 0px var(--border-hard);
+  border-radius: var(--card-radius);
+}
+
+.brutalist-btn-primary {
+  background-color: var(--accent-primary-bg);
+  color: var(--accent-primary-fg);
+  border: 2px solid var(--border-hard);
+  box-shadow: 3px 3px 0px var(--border-hard);
+  border-radius: var(--input-radius);
+  font-weight: 700;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.brutalist-btn-primary:hover {
+  background-color: var(--accent-primary-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--border-hard);
+}
+
+.brutalist-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px var(--border-hard);
+}
+
+.brutalist-btn-secondary {
+  background-color: var(--accent-secondary-bg);
+  color: var(--accent-secondary-fg);
+  border: 2px solid var(--border-hard);
+  box-shadow: 2px 2px 0px var(--border-hard);
+  border-radius: var(--input-radius);
+  font-weight: 600;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.1s ease;
+}
+
+.brutalist-btn-secondary:hover {
+  background-color: var(--accent-secondary-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--border-hard);
+}
+
+.brutalist-btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px var(--border-hard);
+}
+
+.brutalist-badge {
+  border: 1.5px solid var(--border-hard);
+  border-radius: var(--input-radius);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  box-shadow: 1px 1px 0px var(--border-hard);
 }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-canvas);
+  border-left: 1px solid var(--border-subtle);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-subtle);
-  border-radius: 9999px;
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-hard);
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-strong);
+  background: var(--border-focus);
 }
 
 /* Print Stylesheet for proposal export */

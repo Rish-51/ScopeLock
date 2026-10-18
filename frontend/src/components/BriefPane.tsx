@@ -77,33 +77,34 @@ export const BriefPane: React.FC = () => {
 
   return (
     <div
-      className="flex flex-col h-full rounded-2xl overflow-hidden shadow-xl"
+      className="flex flex-col h-full rounded-[3px] overflow-hidden shadow-[4px_4px_0px_#2d0c30]"
       style={{
         backgroundColor: "var(--bg-surface)",
-        border: "1px solid var(--border-subtle)",
+        border: "2px solid var(--border-hard)",
       }}
     >
       {/* Pane Header */}
       <div
-        className="p-4 flex items-center justify-between"
+        className="p-4 flex items-center justify-between border-b-2"
         style={{
-          borderBottom: "1px solid var(--border-subtle)",
+          borderColor: "var(--border-hard)",
           backgroundColor: "var(--bg-canvas)",
         }}
       >
         <div className="flex items-center gap-2">
           <FileText className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
           <h2
-            className="text-xs font-bold uppercase tracking-wider"
+            className="text-xs font-mono font-bold uppercase tracking-wider"
             style={{ color: "var(--text-primary)" }}
           >
             Client Brief & Grounding
           </h2>
           <span
-            className="text-[11px] font-mono px-2 py-0.5 rounded"
+            className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-[2px] shadow-[1px_1px_0px_#2d0c30]"
             style={{
               backgroundColor: "var(--bg-elevated)",
-              color: "var(--text-muted)",
+              color: "var(--text-primary)",
+              border: "1.5px solid var(--border-hard)",
             }}
           >
             {filename || "brief.txt"}
@@ -113,17 +114,13 @@ export const BriefPane: React.FC = () => {
         {/* Grounding Badge */}
         {grounding && (
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] text-xs font-mono font-bold shadow-[2px_2px_0px_#2d0c30]"
             style={{
               backgroundColor:
                 grounding.ungrounded_ids.length === 0
                   ? "var(--status-safe-bg)"
                   : "#FFF7ED",
-              border: `1px solid ${
-                grounding.ungrounded_ids.length === 0
-                  ? "var(--status-safe-border)"
-                  : "#FED7AA"
-              }`,
+              border: "2px solid var(--border-hard)",
               color:
                 grounding.ungrounded_ids.length === 0
                   ? "var(--status-safe-fg)"
@@ -136,7 +133,7 @@ export const BriefPane: React.FC = () => {
               <AlertTriangle className="w-3 h-3" style={{ color: "var(--accent-primary-hover)" }} />
             )}
             <span>
-              {grounding.grounded_quotes}/{grounding.total_quotes} Quotes Grounded ({groundedRatio}%)
+              {grounding.grounded_quotes}/{grounding.total_quotes} Grounded ({groundedRatio}%)
             </span>
           </div>
         )}
@@ -144,14 +141,14 @@ export const BriefPane: React.FC = () => {
 
       {/* Quote Navigation Bar */}
       <div
-        className="p-2.5 overflow-x-auto flex gap-1.5 text-[11px] font-mono"
+        className="p-2.5 overflow-x-auto flex gap-1.5 text-[11px] font-mono border-b-2"
         style={{
-          borderBottom: "1px solid var(--border-subtle)",
+          borderColor: "var(--border-hard)",
           backgroundColor: "var(--bg-input)",
         }}
       >
-        <span className="shrink-0 self-center px-1" style={{ color: "var(--text-muted)" }}>
-          Jump to:
+        <span className="shrink-0 self-center px-1 font-bold text-[10px] uppercase tracking-wider" style={{ color: "var(--text-secondary)" }}>
+          Jump:
         </span>
         {highlights.map((h) => {
           const isSelected = selectedHighlightId === h.id;
@@ -159,18 +156,15 @@ export const BriefPane: React.FC = () => {
             <button
               key={h.id}
               onClick={() => handleHighlightClick(h)}
-              className="shrink-0 px-2 py-0.5 rounded cursor-pointer transition-all border"
+              className="shrink-0 px-2 py-0.5 rounded-[2px] cursor-pointer transition-all font-mono font-bold shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: isSelected
                   ? "var(--pill-active-bg)"
                   : "var(--bg-elevated)",
-                borderColor: isSelected
-                  ? "var(--border-focus)"
-                  : "var(--border-subtle)",
+                border: "1.5px solid var(--border-hard)",
                 color: isSelected
                   ? "var(--pill-active-fg)"
-                  : "var(--text-secondary)",
-                fontWeight: isSelected ? 600 : 400,
+                  : "var(--text-primary)",
               }}
             >
               {h.id}
@@ -192,36 +186,36 @@ export const BriefPane: React.FC = () => {
 
       {/* Footer Legend */}
       <div
-        className="p-3 flex flex-wrap items-center justify-between gap-2 text-[11px]"
+        className="p-3 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono border-t-2"
         style={{
-          borderTop: "1px solid var(--border-subtle)",
+          borderColor: "var(--border-hard)",
           backgroundColor: "var(--bg-canvas)",
-          color: "var(--text-muted)",
+          color: "var(--text-secondary)",
         }}
       >
         <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1.5 font-bold">
             <span
-              className="w-2.5 h-2.5 rounded-sm"
+              className="w-2.5 h-2.5 rounded-[1px]"
               style={{
                 backgroundColor: "var(--bg-elevated)",
-                border: "1px solid var(--border-subtle)",
+                border: "1.5px solid var(--border-hard)",
               }}
             />
             <span>Requirements</span>
           </span>
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1.5 font-bold">
             <span
-              className="w-2.5 h-2.5 rounded-sm"
+              className="w-2.5 h-2.5 rounded-[1px]"
               style={{
                 backgroundColor: "var(--status-safe-bg)",
-                border: "1px solid var(--status-safe-border)",
+                border: "1.5px solid var(--border-hard)",
               }}
             />
             <span>Scope Verified</span>
           </span>
         </div>
-        <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>
+        <span className="text-[10px] font-semibold" style={{ color: "var(--text-muted)" }}>
           Deterministic verbatim quote grounding
         </span>
       </div>

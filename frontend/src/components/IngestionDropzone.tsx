@@ -169,18 +169,18 @@ export const IngestionDropzone: React.FC = () => {
       {/* Hero Header */}
       <div className="text-center space-y-3 pt-6 pb-2">
         <div
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium"
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider shadow-[2px_2px_0px_#2d0c30]"
           style={{
             backgroundColor: "var(--bg-elevated)",
-            border: "1px solid var(--border-subtle)",
-            color: "var(--text-secondary)",
+            border: "2px solid var(--border-hard)",
+            color: "var(--text-primary)",
           }}
         >
-          <Sparkles className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
+          <Sparkles className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
           <span>Local-First • NDA-Safe • Verbatim Grounded</span>
         </div>
         <h1
-          className="text-3xl sm:text-4xl font-extrabold tracking-tight"
+          className="text-3xl sm:text-4xl font-extrabold tracking-tight font-sans"
           style={{ color: "var(--text-primary)" }}
         >
           Scope Freelance RFQs with Total Privacy
@@ -196,17 +196,17 @@ export const IngestionDropzone: React.FC = () => {
 
       {/* Preset Briefs Bar */}
       <div
-        className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl"
+        className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-[3px] shadow-[3px_3px_0px_#2d0c30]"
         style={{
           backgroundColor: "var(--bg-surface)",
-          border: "1px solid var(--border-subtle)",
+          border: "2px solid var(--border-hard)",
         }}
       >
         <span
-          className="text-xs font-medium flex items-center gap-1.5 pl-1"
-          style={{ color: "var(--text-secondary)" }}
+          className="text-xs font-bold uppercase tracking-wider font-mono flex items-center gap-1.5 pl-1"
+          style={{ color: "var(--text-primary)" }}
         >
-          <Layers className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
+          <Layers className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
           <span>Load Synthetic Brief:</span>
         </span>
         <div className="flex flex-wrap gap-2">
@@ -218,22 +218,14 @@ export const IngestionDropzone: React.FC = () => {
                 setActiveInputTab("paste");
                 setSelectedFile(null);
               }}
-              className="px-2.5 py-1 text-xs rounded-lg transition-colors cursor-pointer"
+              className="px-2.5 py-1 text-xs rounded-[2px] font-mono font-semibold transition-all cursor-pointer shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: "var(--bg-elevated)",
-                border: "1px solid var(--border-subtle)",
-                color: "var(--text-secondary)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--text-primary)";
-                e.currentTarget.style.borderColor = "var(--border-strong)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--text-secondary)";
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
+                border: "1.5px solid var(--border-hard)",
+                color: "var(--text-primary)",
               }}
             >
-              {b.name} <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>({b.tag})</span>
+              {b.name} <span className="text-[10px] opacity-75 font-normal">({b.tag})</span>
             </button>
           ))}
         </div>
@@ -241,24 +233,24 @@ export const IngestionDropzone: React.FC = () => {
 
       {/* Input Tabs & Main Card */}
       <div
-        className="rounded-2xl p-6 shadow-xl space-y-5"
+        className="rounded-[3px] p-6 shadow-[4px_4px_0px_#2d0c30] space-y-5"
         style={{
           backgroundColor: "var(--bg-surface)",
-          border: "1px solid var(--border-subtle)",
+          border: "2px solid var(--border-hard)",
         }}
       >
         <div
-          className="flex items-center justify-between pb-3"
-          style={{ borderBottom: "1px solid var(--border-subtle)" }}
+          className="flex items-center justify-between pb-3 border-b-2"
+          style={{ borderColor: "var(--border-hard)" }}
         >
           <div className="flex gap-2">
             <button
               onClick={() => setActiveInputTab("paste")}
-              className="px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer flex items-center gap-2"
+              className="px-3.5 py-1.5 text-xs font-mono font-bold uppercase tracking-wider rounded-[2px] transition-all cursor-pointer flex items-center gap-2 shadow-[2px_2px_0px_#2d0c30]"
               style={{
-                backgroundColor: activeInputTab === "paste" ? "var(--bg-surface)" : "transparent",
-                color: activeInputTab === "paste" ? "var(--text-primary)" : "var(--text-muted)",
-                borderBottom: activeInputTab === "paste" ? "2px solid var(--border-focus)" : "2px solid transparent",
+                backgroundColor: activeInputTab === "paste" ? "var(--bg-elevated)" : "var(--bg-surface)",
+                color: "var(--text-primary)",
+                border: "2px solid var(--border-hard)",
               }}
             >
               <FileCode className="w-3.5 h-3.5" />
@@ -266,11 +258,11 @@ export const IngestionDropzone: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveInputTab("file")}
-              className="px-4 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer flex items-center gap-2"
+              className="px-3.5 py-1.5 text-xs font-mono font-bold uppercase tracking-wider rounded-[2px] transition-all cursor-pointer flex items-center gap-2 shadow-[2px_2px_0px_#2d0c30]"
               style={{
-                backgroundColor: activeInputTab === "file" ? "var(--bg-surface)" : "transparent",
-                color: activeInputTab === "file" ? "var(--text-primary)" : "var(--text-muted)",
-                borderBottom: activeInputTab === "file" ? "2px solid var(--border-focus)" : "2px solid transparent",
+                backgroundColor: activeInputTab === "file" ? "var(--bg-elevated)" : "var(--bg-surface)",
+                color: "var(--text-primary)",
+                border: "2px solid var(--border-hard)",
               }}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -278,7 +270,7 @@ export const IngestionDropzone: React.FC = () => {
             </button>
           </div>
 
-          <div className="text-right text-xs font-mono" style={{ color: "var(--text-muted)" }}>
+          <div className="text-right text-xs font-mono font-semibold" style={{ color: "var(--text-secondary)" }}>
             <span>{charCount.toLocaleString()} chars</span>
             <span className="mx-1.5 opacity-40">•</span>
             <span>~{estimatedTokens.toLocaleString()} tokens</span>
@@ -293,17 +285,11 @@ export const IngestionDropzone: React.FC = () => {
               onChange={(e) => setPastedText(e.target.value)}
               placeholder="Paste your client RFQ, project brief, or email here..."
               rows={10}
-              className="w-full rounded-xl p-4 text-sm font-mono transition-all resize-y outline-none"
+              className="w-full rounded-[2px] p-4 text-sm font-mono transition-all resize-y outline-none shadow-[2px_2px_0px_#2d0c30] focus:shadow-[3px_3px_0px_#2d0c30]"
               style={{
                 backgroundColor: "var(--bg-input)",
-                border: "1px solid var(--border-subtle)",
+                border: "2px solid var(--border-hard)",
                 color: "var(--text-primary)",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-focus)";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
               }}
             />
           </div>
@@ -312,10 +298,10 @@ export const IngestionDropzone: React.FC = () => {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all"
+            className="border-2 border-dashed rounded-[2px] p-10 text-center cursor-pointer transition-all shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30]"
             style={{
               backgroundColor: "var(--bg-input)",
-              borderColor: "var(--border-subtle)",
+              borderColor: "var(--border-hard)",
             }}
           >
             <input
@@ -327,8 +313,8 @@ export const IngestionDropzone: React.FC = () => {
             />
             <Upload className="w-10 h-10 mx-auto mb-3" style={{ color: "var(--text-muted)" }} />
             {selectedFile ? (
-              <div className="space-y-1">
-                <p className="text-sm font-medium" style={{ color: "var(--status-safe-fg)" }}>
+              <div className="space-y-1 font-mono">
+                <p className="text-sm font-bold" style={{ color: "var(--status-safe-fg)" }}>
                   {selectedFile.name}
                 </p>
                 <p className="text-xs" style={{ color: "var(--text-muted)" }}>
@@ -337,10 +323,10 @@ export const IngestionDropzone: React.FC = () => {
               </div>
             ) : (
               <div className="space-y-1">
-                <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
+                <p className="text-sm font-bold font-mono" style={{ color: "var(--text-primary)" }}>
                   Drag and drop your RFP document, or click to browse
                 </p>
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                <p className="text-xs font-mono" style={{ color: "var(--text-muted)" }}>
                   Supports .pdf, .md, .txt (max 10MB)
                 </p>
               </div>
@@ -350,32 +336,32 @@ export const IngestionDropzone: React.FC = () => {
 
         {/* Commercial Configuration Parameters */}
         <div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3"
-          style={{ borderTop: "1px solid var(--border-subtle)" }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t-2"
+          style={{ borderColor: "var(--border-hard)" }}
         >
           <div>
             <label
-              className="block text-xs font-medium mb-1.5 flex items-center gap-1"
-              style={{ color: "var(--text-secondary)" }}
+              className="block text-xs font-bold uppercase tracking-wider font-mono mb-1.5 flex items-center gap-1"
+              style={{ color: "var(--text-primary)" }}
             >
-              <DollarSign className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
+              <DollarSign className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
               <span>Hourly Rate</span>
             </label>
             <div
-              className="flex rounded-lg overflow-hidden"
+              className="flex rounded-[2px] overflow-hidden shadow-[2px_2px_0px_#2d0c30]"
               style={{
                 backgroundColor: "var(--bg-input)",
-                border: "1px solid var(--border-subtle)",
+                border: "2px solid var(--border-hard)",
               }}
             >
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="text-xs px-3 py-2 border-r outline-none cursor-pointer"
+                className="text-xs font-mono font-bold px-3 py-2 border-r-2 outline-none cursor-pointer"
                 style={{
-                  backgroundColor: "transparent",
-                  color: "var(--text-secondary)",
-                  borderColor: "var(--border-subtle)",
+                  backgroundColor: "var(--bg-elevated)",
+                  color: "var(--text-primary)",
+                  borderColor: "var(--border-hard)",
                 }}
               >
                 <option value="USD">USD</option>
@@ -387,7 +373,7 @@ export const IngestionDropzone: React.FC = () => {
                 type="number"
                 value={hourlyRate}
                 onChange={(e) => setHourlyRate(Number(e.target.value) || 0)}
-                className="w-full bg-transparent px-3 py-2 text-xs font-mono outline-none"
+                className="w-full bg-transparent px-3 py-2 text-xs font-mono font-bold outline-none"
                 style={{ color: "var(--text-primary)" }}
               />
             </div>
@@ -395,17 +381,17 @@ export const IngestionDropzone: React.FC = () => {
 
           <div>
             <label
-              className="block text-xs font-medium mb-1.5 flex items-center gap-1"
-              style={{ color: "var(--text-secondary)" }}
+              className="block text-xs font-bold uppercase tracking-wider font-mono mb-1.5 flex items-center gap-1"
+              style={{ color: "var(--text-primary)" }}
             >
-              <Percent className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
+              <Percent className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
               <span>Contingency Buffer</span>
             </label>
             <div
-              className="grid grid-cols-3 gap-1 p-1 rounded-lg"
+              className="grid grid-cols-3 gap-1 p-1 rounded-[2px] shadow-[2px_2px_0px_#2d0c30]"
               style={{
                 backgroundColor: "var(--bg-input)",
-                border: "1px solid var(--border-subtle)",
+                border: "2px solid var(--border-hard)",
               }}
             >
               {[15, 20, 25].map((pct) => (
@@ -413,11 +399,11 @@ export const IngestionDropzone: React.FC = () => {
                   key={pct}
                   type="button"
                   onClick={() => setContingencyPercent(pct)}
-                  className="py-1 text-xs rounded transition-colors cursor-pointer"
+                  className="py-1 text-xs font-mono rounded-[2px] transition-all cursor-pointer font-bold"
                   style={{
                     backgroundColor: contingencyPercent === pct ? "var(--pill-active-bg)" : "transparent",
                     color: contingencyPercent === pct ? "var(--pill-active-fg)" : "var(--text-secondary)",
-                    fontWeight: contingencyPercent === pct ? 600 : 400,
+                    border: contingencyPercent === pct ? "1.5px solid var(--border-hard)" : "1.5px solid transparent",
                   }}
                 >
                   {pct}%
@@ -428,14 +414,14 @@ export const IngestionDropzone: React.FC = () => {
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-medium" style={{ color: "var(--text-secondary)" }}>
+              <label className="text-xs font-bold uppercase tracking-wider font-mono" style={{ color: "var(--text-primary)" }}>
                 Target Architecture
               </label>
               <span
-                className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+                className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-[2px] shadow-[1px_1px_0px_#2d0c30]"
                 style={{
                   backgroundColor: "var(--status-safe-bg)",
-                  border: "1px solid var(--status-safe-border)",
+                  border: "1.5px solid var(--border-hard)",
                   color: "var(--status-safe-fg)",
                 }}
               >
@@ -445,10 +431,10 @@ export const IngestionDropzone: React.FC = () => {
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="w-full rounded-lg px-3 py-2 text-xs font-mono outline-none cursor-pointer"
+              className="w-full rounded-[2px] px-3 py-2 text-xs font-mono font-semibold outline-none cursor-pointer shadow-[2px_2px_0px_#2d0c30]"
               style={{
                 backgroundColor: "var(--bg-input)",
-                border: "1px solid var(--border-subtle)",
+                border: "2px solid var(--border-hard)",
                 color: "var(--text-primary)",
               }}
             >
@@ -464,31 +450,31 @@ export const IngestionDropzone: React.FC = () => {
         {/* Error Notification */}
         {errorMsg && (
           <div
-            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-xl text-xs"
+            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-[2px] text-xs shadow-[3px_3px_0px_#2d0c30]"
             style={{
               backgroundColor: "#2a1215",
-              border: "1px solid #5c1d24",
+              border: "2px solid var(--border-hard)",
               color: "#fca5a5",
             }}
           >
             <div className="flex items-start gap-2.5">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#f87171" }} />
               <div className="space-y-1">
-                <p className="font-semibold" style={{ color: "#fecaca" }}>Local Analysis Notice</p>
+                <p className="font-bold font-mono" style={{ color: "#fecaca" }}>Local Analysis Notice</p>
                 <p className="leading-relaxed opacity-90">{errorMsg}</p>
               </div>
             </div>
+
             <button
               type="button"
               onClick={handleLoadDemo}
-              className="shrink-0 px-3 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer self-end sm:self-center"
+              className="shrink-0 px-3 py-1.5 rounded-[2px] border-2 border-[#2d0c30] text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer self-end sm:self-center shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: "var(--bg-elevated)",
-                borderColor: "var(--border-subtle)",
                 color: "var(--text-primary)",
               }}
             >
-              <Zap className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
+              <Zap className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-bg)" }} />
               <span>Load Instant Demo</span>
             </button>
           </div>
@@ -502,20 +488,14 @@ export const IngestionDropzone: React.FC = () => {
               type="button"
               onClick={handleLoadDemo}
               disabled={isAnalyzing}
-              className="py-3 px-4 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="py-3 px-4 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_#2d0c30] hover:shadow-[4px_4px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 backgroundColor: "var(--accent-secondary-bg)",
-                border: "1px solid var(--accent-secondary-border)",
+                border: "2px solid var(--border-hard)",
                 color: "var(--accent-secondary-fg)",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--accent-secondary-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--accent-secondary-bg)";
-              }}
             >
-              <Zap className="w-4 h-4 shrink-0" style={{ color: "var(--status-safe-fg)" }} />
+              <Zap className="w-4 h-4 shrink-0" style={{ color: "var(--accent-primary-bg)" }} />
               <span>⚡ Load Instant Demo Replay (0s)</span>
             </button>
 
@@ -524,18 +504,11 @@ export const IngestionDropzone: React.FC = () => {
               type="button"
               onClick={handleAnalyze}
               disabled={isAnalyzing}
-              className="py-3 px-6 text-xs tracking-wide transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="py-3 px-6 text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_#2d0c30] hover:shadow-[4px_4px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 backgroundColor: "var(--accent-primary-bg)",
                 color: "var(--accent-primary-fg)",
-                borderRadius: "var(--input-radius)",
-                fontWeight: 600,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--accent-primary-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--accent-primary-bg)";
+                border: "2px solid var(--border-hard)",
               }}
             >
               {isAnalyzing ? (
@@ -569,22 +542,22 @@ export const IngestionDropzone: React.FC = () => {
           {/* Active CPU Progress Indicator */}
           {isAnalyzing && (
             <div
-              className="p-4 rounded-xl space-y-2.5 text-xs animate-in fade-in duration-300"
+              className="p-4 rounded-[2px] space-y-2.5 text-xs shadow-[3px_3px_0px_#2d0c30] animate-in fade-in duration-300"
               style={{
                 backgroundColor: "var(--bg-elevated)",
-                border: "1px solid var(--border-subtle)",
+                border: "2px solid var(--border-hard)",
                 color: "var(--text-secondary)",
               }}
             >
               <div className="flex items-center justify-between">
-                <span className="font-semibold flex items-center gap-2" style={{ color: "var(--status-safe-fg)" }}>
+                <span className="font-bold font-mono flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
                   <span
                     className="inline-block animate-spin rounded-full h-3 w-3 border-2 border-t-transparent"
-                    style={{ borderColor: "var(--status-safe-fg)", borderTopColor: "transparent" }}
+                    style={{ borderColor: "var(--border-hard)", borderTopColor: "transparent" }}
                   />
                   Local 5-Step Scoping Pipeline in Progress
                 </span>
-                <span className="font-mono text-xs flex items-center gap-1" style={{ color: "var(--text-muted)" }}>
+                <span className="font-mono text-xs font-bold flex items-center gap-1" style={{ color: "var(--text-primary)" }}>
                   <Clock className="w-3.5 h-3.5" />
                   {elapsedSeconds}s elapsed
                 </span>
@@ -594,17 +567,17 @@ export const IngestionDropzone: React.FC = () => {
                 Because CPUs generate tokens sequentially at ~3–5 tokens/sec, this takes 1–3 minutes per step.
               </p>
               <div
-                className="pt-1.5 flex items-center justify-between"
-                style={{ borderTop: "1px solid var(--border-subtle)" }}
+                className="pt-1.5 flex items-center justify-between border-t"
+                style={{ borderColor: "var(--border-subtle)" }}
               >
-                <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>
+                <span className="text-[11px] font-mono" style={{ color: "var(--text-muted)" }}>
                   Want to test the full workbench immediately?
                 </span>
                 <button
                   type="button"
                   onClick={handleLoadDemo}
-                  className="text-[11px] font-semibold underline cursor-pointer"
-                  style={{ color: "var(--status-safe-fg)" }}
+                  className="text-[11px] font-mono font-bold underline cursor-pointer"
+                  style={{ color: "var(--accent-primary-bg)" }}
                 >
                   ⚡ Switch to Instant Demo Trace →
                 </button>

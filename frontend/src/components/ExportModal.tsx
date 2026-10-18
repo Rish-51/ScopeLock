@@ -37,24 +37,24 @@ export const ExportModal: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
       <div
-        className="rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
+        className="rounded-[3px] w-full max-w-4xl max-h-[90vh] flex flex-col shadow-[6px_6px_0px_#2d0c30] overflow-hidden"
         style={{
           backgroundColor: "var(--bg-surface)",
-          border: "1px solid var(--border-subtle)",
+          border: "2px solid var(--border-hard)",
         }}
       >
         {/* Header */}
         <div
-          className="p-5 flex items-center justify-between"
+          className="p-5 flex items-center justify-between border-b-2"
           style={{
-            borderBottom: "1px solid var(--border-subtle)",
+            borderColor: "var(--border-hard)",
             backgroundColor: "var(--bg-canvas)",
           }}
         >
           <div className="flex items-center gap-2">
             <FileText className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
             <h3
-              className="text-sm font-bold uppercase tracking-wider"
+              className="text-sm font-mono font-bold uppercase tracking-wider"
               style={{ color: "var(--text-primary)" }}
             >
               Export Client Proposal & Scope of Work
@@ -62,27 +62,19 @@ export const ExportModal: React.FC = () => {
           </div>
           <button
             onClick={() => setExportModalOpen(false)}
-            className="p-1.5 rounded-lg transition-colors cursor-pointer"
-            style={{ color: "var(--text-secondary)" }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "var(--text-primary)";
-              e.currentTarget.style.backgroundColor = "var(--bg-elevated)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "var(--text-secondary)";
-              e.currentTarget.style.backgroundColor = "transparent";
-            }}
+            className="p-1.5 rounded-[2px] border border-[#2d0c30] transition-all cursor-pointer shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30]"
+            style={{ color: "var(--text-primary)", backgroundColor: "var(--bg-elevated)" }}
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Action Toolbar */}
         <div
-          className="flex flex-wrap items-center justify-between gap-3 p-4 text-xs"
+          className="flex flex-wrap items-center justify-between gap-3 p-4 text-xs font-mono border-b-2"
           style={{
             backgroundColor: "var(--bg-input)",
-            borderBottom: "1px solid var(--border-subtle)",
+            borderColor: "var(--border-hard)",
           }}
         >
           <div style={{ color: "var(--text-secondary)" }}>
@@ -92,17 +84,11 @@ export const ExportModal: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={handleCopy}
-              className="px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-[2px] font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: "var(--bg-surface)",
-                border: "1px solid var(--border-subtle)",
-                color: "var(--text-secondary)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--text-primary)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--text-secondary)";
+                border: "2px solid var(--border-hard)",
+                color: "var(--text-primary)",
               }}
             >
               {copied ? (
@@ -120,17 +106,11 @@ export const ExportModal: React.FC = () => {
 
             <button
               onClick={handleDownload}
-              className="px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-[2px] font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: "var(--bg-surface)",
-                border: "1px solid var(--border-subtle)",
-                color: "var(--text-secondary)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--text-primary)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--text-secondary)";
+                border: "2px solid var(--border-hard)",
+                color: "var(--text-primary)",
               }}
             >
               <Download className="w-3.5 h-3.5" />
@@ -139,22 +119,15 @@ export const ExportModal: React.FC = () => {
 
             <button
               onClick={handlePrint}
-              className="px-3.5 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+              className="px-3.5 py-1.5 rounded-[2px] font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: "var(--accent-primary-bg)",
                 color: "var(--accent-primary-fg)",
-                borderRadius: "var(--input-radius)",
-                fontWeight: 600,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--accent-primary-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--accent-primary-bg)";
+                border: "2px solid var(--border-hard)",
               }}
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print / Save PDF</span>
+              <span>Print / PDF</span>
             </button>
           </div>
         </div>
@@ -172,18 +145,18 @@ export const ExportModal: React.FC = () => {
 
         {/* Footer */}
         <div
-          className="p-3 text-right"
+          className="p-3 text-right border-t-2"
           style={{
             backgroundColor: "var(--bg-canvas)",
-            borderTop: "1px solid var(--border-subtle)",
+            borderColor: "var(--border-hard)",
           }}
         >
           <button
             onClick={() => setExportModalOpen(false)}
-            className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+            className="px-4 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
             style={{
               backgroundColor: "var(--bg-elevated)",
-              border: "1px solid var(--border-subtle)",
+              border: "2px solid var(--border-hard)",
               color: "var(--text-primary)",
             }}
           >

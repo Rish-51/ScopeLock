@@ -34,40 +34,32 @@ export const ProposalWorkbench: React.FC = () => {
     <div className="w-full max-w-7xl mx-auto space-y-4">
       {/* Workbench Header */}
       <div
-        className="p-5 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4"
+        className="p-5 rounded-[3px] shadow-[4px_4px_0px_#2d0c30] flex flex-wrap items-center justify-between gap-4"
         style={{
           backgroundColor: "var(--bg-surface)",
-          border: "1px solid var(--border-subtle)",
+          border: "2px solid var(--border-hard)",
         }}
       >
         <div className="space-y-1.5 max-w-2xl">
           <div className="flex items-center gap-2">
             <button
               onClick={resetWorkbench}
-              className="px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-[2px] text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
               style={{
                 backgroundColor: "var(--bg-elevated)",
-                border: "1px solid var(--border-subtle)",
-                color: "var(--text-secondary)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--text-primary)";
-                e.currentTarget.style.borderColor = "var(--border-strong)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--text-secondary)";
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
+                border: "1.5px solid var(--border-hard)",
+                color: "var(--text-primary)",
               }}
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>New Brief</span>
+              <span>NEW BRIEF</span>
             </button>
             <span style={{ color: "var(--text-muted)" }}>/</span>
             <span
-              className="text-xs font-mono font-semibold px-2 py-0.5 rounded"
+              className="text-xs font-mono font-bold px-2 py-0.5 rounded-[2px] shadow-[1px_1px_0px_#2d0c30]"
               style={{
                 backgroundColor: "var(--status-safe-bg)",
-                border: "1px solid var(--status-safe-border)",
+                border: "1.5px solid var(--border-hard)",
                 color: "var(--status-safe-fg)",
               }}
             >
@@ -76,11 +68,11 @@ export const ProposalWorkbench: React.FC = () => {
             {req.stated_platform_or_stack.map((s) => (
               <span
                 key={s}
-                className="text-[11px] font-mono px-2 py-0.5 rounded"
+                className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-[2px] shadow-[1px_1px_0px_#2d0c30]"
                 style={{
                   backgroundColor: "var(--bg-elevated)",
-                  color: "var(--text-secondary)",
-                  border: "1px solid var(--border-subtle)",
+                  color: "var(--text-primary)",
+                  border: "1.5px solid var(--border-hard)",
                 }}
               >
                 {s}
@@ -88,12 +80,12 @@ export const ProposalWorkbench: React.FC = () => {
             ))}
           </div>
           <h1
-            className="text-xl sm:text-2xl font-extrabold tracking-tight"
+            className="text-xl sm:text-2xl font-extrabold tracking-tight font-sans"
             style={{ color: "var(--text-primary)" }}
           >
             {req.project_title}
           </h1>
-          <p className="text-xs sm:text-sm" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-xs sm:text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
             {req.one_line_summary}
           </p>
         </div>
@@ -102,17 +94,11 @@ export const ProposalWorkbench: React.FC = () => {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => setTraceModalOpen(true)}
-            className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer"
+            className="px-3.5 py-2 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
             style={{
               backgroundColor: "var(--accent-secondary-bg)",
-              border: "1px solid var(--accent-secondary-border)",
+              border: "2px solid var(--border-hard)",
               color: "var(--accent-secondary-fg)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--accent-secondary-hover)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--accent-secondary-bg)";
             }}
           >
             <Activity className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
@@ -121,18 +107,11 @@ export const ProposalWorkbench: React.FC = () => {
 
           <button
             onClick={() => setExportModalOpen(true)}
-            className="px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-[3px_3px_0px_#2d0c30] hover:shadow-[4px_4px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
             style={{
               backgroundColor: "var(--accent-primary-bg)",
               color: "var(--accent-primary-fg)",
-              borderRadius: "var(--input-radius)",
-              fontWeight: 600,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--accent-primary-hover)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--accent-primary-bg)";
+              border: "2px solid var(--border-hard)",
             }}
           >
             <Download className="w-4 h-4" />
@@ -150,36 +129,37 @@ export const ProposalWorkbench: React.FC = () => {
 
         {/* Right: Tabbed Scoping Workspace (7 columns) */}
         <div
-          className="lg:col-span-7 flex flex-col h-[750px] rounded-2xl overflow-hidden shadow-xl"
+          className="lg:col-span-7 flex flex-col h-[750px] rounded-[3px] overflow-hidden shadow-[4px_4px_0px_#2d0c30]"
           style={{
             backgroundColor: "var(--bg-surface)",
-            border: "1px solid var(--border-subtle)",
+            border: "2px solid var(--border-hard)",
           }}
         >
           {/* Tab Navigation */}
           <div
-            className="flex p-2 gap-1.5 overflow-x-auto"
+            className="flex p-2 gap-1.5 overflow-x-auto border-b-2"
             style={{
-              borderBottom: "1px solid var(--border-subtle)",
+              borderColor: "var(--border-hard)",
               backgroundColor: "var(--bg-canvas)",
             }}
           >
             <button
               onClick={() => setActiveTab("milestones")}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
               style={{
                 backgroundColor: activeTab === "milestones" ? "var(--bg-elevated)" : "transparent",
-                color: activeTab === "milestones" ? "var(--text-primary)" : "var(--text-muted)",
-                border: activeTab === "milestones" ? "1px solid var(--border-subtle)" : "1px solid transparent",
+                color: activeTab === "milestones" ? "var(--text-primary)" : "var(--text-secondary)",
+                border: activeTab === "milestones" ? "2px solid var(--border-hard)" : "2px solid transparent",
+                boxShadow: activeTab === "milestones" ? "2px 2px 0px #2d0c30" : "none",
               }}
             >
               <Calendar className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />
               <span>Milestones & Price</span>
               <span
-                className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                className="text-[10px] font-mono px-1.5 py-0.5 rounded-[2px] border border-[#2d0c30]"
                 style={{
                   backgroundColor: "var(--bg-surface)",
-                  color: "var(--text-muted)",
+                  color: "var(--text-primary)",
                 }}
               >
                 {proposal.plan.milestones.length}
@@ -188,20 +168,21 @@ export const ProposalWorkbench: React.FC = () => {
 
             <button
               onClick={() => setActiveTab("risks")}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
               style={{
                 backgroundColor: activeTab === "risks" ? "var(--bg-elevated)" : "transparent",
-                color: activeTab === "risks" ? "var(--text-primary)" : "var(--text-muted)",
-                border: activeTab === "risks" ? "1px solid var(--border-subtle)" : "1px solid transparent",
+                color: activeTab === "risks" ? "var(--text-primary)" : "var(--text-secondary)",
+                border: activeTab === "risks" ? "2px solid var(--border-hard)" : "2px solid transparent",
+                boxShadow: activeTab === "risks" ? "2px 2px 0px #2d0c30" : "none",
               }}
             >
               <AlertTriangle className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-hover)" }} />
               <span>Technical Risks</span>
               <span
-                className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                className="text-[10px] font-mono px-1.5 py-0.5 rounded-[2px] border border-[#2d0c30]"
                 style={{
                   backgroundColor: "var(--bg-surface)",
-                  color: "var(--text-muted)",
+                  color: "var(--text-primary)",
                 }}
               >
                 {risks.risks.length}
@@ -210,20 +191,21 @@ export const ProposalWorkbench: React.FC = () => {
 
             <button
               onClick={() => setActiveTab("scope_guard")}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
               style={{
                 backgroundColor: activeTab === "scope_guard" ? "var(--bg-elevated)" : "transparent",
-                color: activeTab === "scope_guard" ? "var(--text-primary)" : "var(--text-muted)",
-                border: activeTab === "scope_guard" ? "1px solid var(--border-subtle)" : "1px solid transparent",
+                color: activeTab === "scope_guard" ? "var(--text-primary)" : "var(--text-secondary)",
+                border: activeTab === "scope_guard" ? "2px solid var(--border-hard)" : "2px solid transparent",
+                boxShadow: activeTab === "scope_guard" ? "2px 2px 0px #2d0c30" : "none",
               }}
             >
               <ShieldAlert className="w-3.5 h-3.5" style={{ color: "var(--accent-primary-hover)" }} />
               <span>Scope Guard</span>
               <span
-                className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                className="text-[10px] font-mono px-1.5 py-0.5 rounded-[2px] border border-[#2d0c30]"
                 style={{
                   backgroundColor: "var(--bg-surface)",
-                  color: "var(--text-muted)",
+                  color: "var(--text-primary)",
                 }}
               >
                 {risks.scope_creep_warnings.length}
@@ -232,11 +214,12 @@ export const ProposalWorkbench: React.FC = () => {
 
             <button
               onClick={() => setActiveTab("client_email")}
-              className="px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+              className="px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
               style={{
                 backgroundColor: activeTab === "client_email" ? "var(--bg-elevated)" : "transparent",
-                color: activeTab === "client_email" ? "var(--text-primary)" : "var(--text-muted)",
-                border: activeTab === "client_email" ? "1px solid var(--border-subtle)" : "1px solid transparent",
+                color: activeTab === "client_email" ? "var(--text-primary)" : "var(--text-secondary)",
+                border: activeTab === "client_email" ? "2px solid var(--border-hard)" : "2px solid transparent",
+                boxShadow: activeTab === "client_email" ? "2px 2px 0px #2d0c30" : "none",
               }}
             >
               <Mail className="w-3.5 h-3.5" style={{ color: "var(--status-safe-fg)" }} />

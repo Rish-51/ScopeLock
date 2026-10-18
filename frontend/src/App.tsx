@@ -36,20 +36,20 @@ export const App: React.FC = () => {
 
       {/* Main Navigation Header */}
       <header
-        className="sticky top-0 z-40 backdrop-blur-md border-b"
+        className="sticky top-0 z-40 backdrop-blur-md border-b-2"
         style={{
           backgroundColor: "var(--bg-surface)",
-          borderColor: "var(--border-subtle)",
+          borderColor: "var(--border-hard)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm"
+              className="w-9 h-9 rounded-[3px] flex items-center justify-center shadow-[2px_2px_0px_#2d0c30]"
               style={{
                 backgroundColor: "var(--bg-elevated)",
-                border: "1px solid var(--border-subtle)",
+                border: "2px solid var(--border-hard)",
               }}
             >
               <Lock className="w-5 h-5" style={{ color: "var(--status-safe-fg)" }} />
@@ -57,23 +57,24 @@ export const App: React.FC = () => {
             <div>
               <div className="flex items-center gap-2">
                 <span
-                  className="font-extrabold text-base tracking-tight"
+                  className="font-extrabold text-base tracking-tight font-sans"
                   style={{ color: "var(--text-primary)" }}
                 >
                   ScopeLock
                 </span>
                 <span
-                  className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold"
+                  className="px-1.5 py-0.5 rounded-[2px] text-[10px] font-mono font-bold shadow-[1px_1px_0px_#2d0c30]"
                   style={{
                     backgroundColor: "var(--bg-elevated)",
-                    color: "var(--text-muted)",
+                    color: "var(--text-primary)",
+                    border: "1px solid var(--border-hard)",
                   }}
                 >
                   v0.1.0
                 </span>
               </div>
               <p
-                className="text-[10px] font-mono hidden sm:block"
+                className="text-[10px] font-mono uppercase tracking-wider hidden sm:block font-semibold"
                 style={{ color: "var(--text-secondary)" }}
               >
                 NDA-Safe RFQ & Proposal Scoper
@@ -86,27 +87,23 @@ export const App: React.FC = () => {
             <PrivacyBeacon />
 
             <div
-              className="hidden md:flex items-center gap-2 pl-4 border-l"
+              className="hidden md:flex items-center gap-2 pl-4 border-l-2"
               style={{ borderColor: "var(--border-subtle)" }}
             >
               <a
                 href="https://github.com/Rish-51/week2"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-mono"
-                style={{ color: "var(--text-secondary)" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = "var(--text-primary)";
-                  e.currentTarget.style.backgroundColor = "var(--bg-elevated)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = "var(--text-secondary)";
-                  e.currentTarget.style.backgroundColor = "transparent";
+                className="px-2.5 py-1 rounded-[2px] transition-all flex items-center gap-1.5 text-xs font-mono font-bold shadow-[1px_1px_0px_#2d0c30] hover:shadow-[2px_2px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                style={{
+                  color: "var(--text-primary)",
+                  backgroundColor: "var(--bg-elevated)",
+                  border: "1.5px solid var(--border-hard)",
                 }}
                 title="View GitHub Repository"
               >
                 <Code2 className="w-4 h-4" />
-                <span>Source</span>
+                <span>SOURCE</span>
               </a>
             </div>
           </div>
@@ -124,19 +121,19 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <footer
-        className="py-6 px-4 text-xs border-t"
+        className="py-6 px-4 text-xs border-t-2"
         style={{
           backgroundColor: "var(--bg-canvas)",
-          borderColor: "var(--border-subtle)",
-          color: "var(--text-muted)",
+          borderColor: "var(--border-hard)",
+          color: "var(--text-secondary)",
         }}
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 font-medium">
             <ShieldCheck className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
             <span>Zero Client-Content Egress: Brief text strictly stays on your local machine.</span>
           </div>
-          <div className="flex items-center gap-4 font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>
+          <div className="flex items-center gap-4 font-mono text-[11px] font-semibold" style={{ color: "var(--text-muted)" }}>
             <span>DEV Hacktoberfest 2026</span>
             <span>•</span>
             <span>Apache-2.0</span>

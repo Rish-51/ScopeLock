@@ -41,14 +41,14 @@ export const ClientEmail: React.FC = () => {
     <div className="space-y-5">
       {/* Informational Banner */}
       <div
-        className="p-4 rounded-xl flex items-center justify-between gap-3"
+        className="p-4 rounded-[2px] flex items-center justify-between gap-3 shadow-[3px_3px_0px_#2d0c30]"
         style={{
-          backgroundColor: "var(--bg-input)",
-          border: "1px solid var(--border-subtle)",
+          backgroundColor: "var(--bg-surface)",
+          border: "2px solid var(--border-hard)",
         }}
       >
         <div className="space-y-1">
-          <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
+          <h3 className="text-sm font-bold font-sans flex items-center gap-2" style={{ color: "var(--text-primary)" }}>
             <Mail className="w-4 h-4" style={{ color: "var(--status-safe-fg)" }} />
             <span>'Questions Before I Quote' Client Email Draft</span>
           </h3>
@@ -59,18 +59,11 @@ export const ClientEmail: React.FC = () => {
 
         <button
           onClick={handleCopy}
-          className="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0"
+          className="px-3.5 py-1.5 rounded-[2px] text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shrink-0 shadow-[2px_2px_0px_#2d0c30] hover:shadow-[3px_3px_0px_#2d0c30] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
           style={{
             backgroundColor: "var(--accent-primary-bg)",
             color: "var(--accent-primary-fg)",
-            borderRadius: "var(--input-radius)",
-            fontWeight: 600,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "var(--accent-primary-hover)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "var(--accent-primary-bg)";
+            border: "2px solid var(--border-hard)",
           }}
         >
           {copied ? (
@@ -89,56 +82,44 @@ export const ClientEmail: React.FC = () => {
 
       {/* Email Composer Box */}
       <div
-        className="rounded-xl overflow-hidden space-y-3 p-4"
+        className="rounded-[2px] overflow-hidden space-y-3 p-4 shadow-[4px_4px_0px_#2d0c30]"
         style={{
-          backgroundColor: "var(--bg-input)",
-          border: "1px solid var(--border-subtle)",
+          backgroundColor: "var(--bg-surface)",
+          border: "2px solid var(--border-hard)",
         }}
       >
         {/* Subject */}
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>
+          <label className="block text-[11px] font-mono font-bold uppercase tracking-wider mb-1" style={{ color: "var(--text-primary)" }}>
             Subject Line:
           </label>
           <input
             type="text"
             value={email.subject}
             onChange={(e) => handleSubjectChange(e.target.value)}
-            className="w-full rounded-lg px-3 py-2 text-xs font-mono outline-none"
+            className="w-full rounded-[2px] px-3 py-2 text-xs font-mono outline-none shadow-[2px_2px_0px_#2d0c30]"
             style={{
-              backgroundColor: "var(--bg-surface)",
-              border: "1px solid var(--border-subtle)",
+              backgroundColor: "var(--bg-input)",
+              border: "2px solid var(--border-hard)",
               color: "var(--text-primary)",
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-focus)";
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-subtle)";
             }}
           />
         </div>
 
         {/* Body */}
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: "var(--text-muted)" }}>
+          <label className="block text-[11px] font-mono font-bold uppercase tracking-wider mb-1" style={{ color: "var(--text-primary)" }}>
             Email Body:
           </label>
           <textarea
             value={email.body}
             onChange={(e) => handleBodyChange(e.target.value)}
             rows={12}
-            className="w-full rounded-lg p-3 text-xs font-mono leading-relaxed outline-none resize-y"
+            className="w-full rounded-[2px] p-3 text-xs font-mono leading-relaxed outline-none resize-y shadow-[2px_2px_0px_#2d0c30]"
             style={{
-              backgroundColor: "var(--bg-surface)",
-              border: "1px solid var(--border-subtle)",
+              backgroundColor: "var(--bg-input)",
+              border: "2px solid var(--border-hard)",
               color: "var(--text-primary)",
-            }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-focus)";
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-subtle)";
             }}
           />
         </div>
