@@ -7,7 +7,7 @@ Stateless backend providing:
   - GET  /api/v1/multipliers (returns active pricing heuristics)
 """
 
-from typing import Optional
+from typing import Optional, Dict, Any
 from fastapi import FastAPI, File, Form, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
