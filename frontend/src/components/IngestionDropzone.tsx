@@ -248,8 +248,8 @@ export const IngestionDropzone: React.FC = () => {
               onClick={() => setActiveInputTab("paste")}
               className="px-3.5 py-1.5 text-xs font-mono font-bold uppercase tracking-wider rounded-[2px] transition-all cursor-pointer flex items-center gap-2 shadow-[2px_2px_0px_#2d0c30]"
               style={{
-                backgroundColor: activeInputTab === "paste" ? "var(--bg-elevated)" : "var(--bg-surface)",
-                color: "var(--text-primary)",
+                backgroundColor: activeInputTab === "paste" ? "var(--pill-active-bg)" : "var(--bg-surface)",
+                color: activeInputTab === "paste" ? "var(--pill-active-fg)" : "var(--text-primary)",
                 border: "2px solid var(--border-hard)",
               }}
             >
@@ -260,8 +260,8 @@ export const IngestionDropzone: React.FC = () => {
               onClick={() => setActiveInputTab("file")}
               className="px-3.5 py-1.5 text-xs font-mono font-bold uppercase tracking-wider rounded-[2px] transition-all cursor-pointer flex items-center gap-2 shadow-[2px_2px_0px_#2d0c30]"
               style={{
-                backgroundColor: activeInputTab === "file" ? "var(--bg-elevated)" : "var(--bg-surface)",
-                color: "var(--text-primary)",
+                backgroundColor: activeInputTab === "file" ? "var(--pill-active-bg)" : "var(--bg-surface)",
+                color: activeInputTab === "file" ? "var(--pill-active-fg)" : "var(--text-primary)",
                 border: "2px solid var(--border-hard)",
               }}
             >
